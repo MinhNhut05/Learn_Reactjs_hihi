@@ -7,7 +7,7 @@
 **Target Completion:** ~2026-04 (3-4 tháng)
 
 ### Phase Status
-- [ ] Phase 1: Củng cố nền tảng (0/16 sessions)
+- [ ] Phase 1: Củng cố nền tảng (1/16 sessions)
 - [ ] Phase 2: State Management & Data (0/9 sessions)
 - [ ] Phase 3: Performance & Optimization (0/6 sessions)
 - [ ] Phase 4: Next.js (0/8 sessions)
@@ -26,7 +26,7 @@
 ## 📅 PHASE 1 PROGRESS
 
 ### Module 1.1: TypeScript cho React
-- [ ] Session 1.1.1: Props & State Typing
+- [✅] Session 1.1.1: Props & State Typing
 - [ ] Session 1.1.2: Event Handlers Typing
 - [ ] Session 1.1.3: Hooks với TypeScript
 - [ ] Session 1.1.4: Utility Types & Advanced
@@ -146,15 +146,52 @@
 
 ## 📊 Stats
 
-**Total Sessions Completed:** 0 / 45
-**Total Exercises Completed:** 0
-**Average Quiz Score:** N/A
+**Total Sessions Completed:** 1 / 45
+**Total Exercises Completed:** 3
+**Average Quiz Score:** 90%
 
 ---
 
 ## 📝 Session Log
 
 > **AI tự động append vào đây sau mỗi session**
+
+### 2025-12-26 - Session 1.1.1: Props & State Typing
+**Status:** ✅ Completed
+
+**Concepts Learned:**
+- Interface cho Props (object shapes)
+- Optional props với `?` và default values
+- ReactNode typing cho children
+- Conditional rendering với `&&`
+- ClassName merging patterns
+- Generic types `<T>` cho reusable components
+- Render props pattern
+- Type inference trong generics
+
+**Exercises Completed:**
+- ✅ Exercise 1: Button Component (10/10)
+- ✅ Exercise 2: Card Component (10/10)
+- ✅ Exercise 3: Generic List Component (9/10)
+
+**Quiz Score:** 4.5/5 (90%)
+
+**Key Insights:**
+- Generic types ban đầu khó hiểu, nhưng sau khi code thì rất clear
+- Type inference trong generics mạnh - autocomplete hoạt động perfect
+- Shared project structure tiết kiệm thời gian, không setup lại mỗi exercise
+- Workflow đọc theory trước + code song song với review rất hiệu quả
+
+**Time Spent:** ~2 hours
+
+**Files Created:**
+- `shared-project/src/session-1.1.1/` (3 exercises + 3 solutions)
+- `session-1.1.1-props-typing/COMPLETE_THEORY.md`
+- `session-1.1.1-props-typing/summary.md`
+
+**Next:** Session 1.1.2: Event Handlers Typing
+
+---
 
 <!-- Sessions sẽ được thêm vào dưới đây theo format:
 
