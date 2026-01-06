@@ -1,6 +1,6 @@
 // 02-ParentChild.tsx
 
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from "react";
 
 /**
  * EXERCISE 2: Parent-Child Re-renders
@@ -40,21 +40,20 @@ import { useState, useRef, useEffect } from 'react'
 // ===== PARENT COMPONENT =====
 function ParentChild() {
   // TODO 1: Tạo state parentCount
-  const [parentCount, setParentCount] = useState(0)
+  const [parentCount, setParentCount] = useState(0);
 
   // TODO 2: Tạo ref để đếm parent renders
-  const parentRenderCount = useRef(0)
+  const parentRenderCount = useRef(0);
 
   // TODO 3: useEffect để log và đếm renders
   useEffect(() => {
     // ← Viết code ở đây
-    // parentRenderCount.current += 1
-    // console.log('👨 Parent rendered!')
-  })
+    parentRenderCount.current += 1;
+    console.log("👨 Parent rendered!");
+  });
 
   // Tạm thời để tránh lỗi unused
-  void parentCount
-  void setParentCount
+  console.log("🔵 Rendering Parent...");
 
   return (
     <div className="section">
@@ -67,13 +66,13 @@ function ParentChild() {
         {/* TODO 4: Hiển thị parent state và render count */}
         <div className="flex gap-20 mb-20">
           <p>
-            <strong>Parent Count:</strong>{' '}
-            <span style={{ fontSize: '20px' }}>
-              {0 /* ← Thay bằng parentCount */}
+            <strong>Parent Count:</strong>{" "}
+            <span style={{ fontSize: "20px" }}>
+              {parentCount /* ← Thay bằng parentCount */}
             </span>
           </p>
           <p>
-            <strong>Parent Render Count:</strong>{' '}
+            <strong>Parent Render Count:</strong>{" "}
             <span className="render-count">
               {parentRenderCount.current /* ← Sửa ở đây */}
             </span>
@@ -84,6 +83,7 @@ function ParentChild() {
         <button
           className="btn btn-primary mb-20"
           onClick={() => {
+            setParentCount((c) => c + 1);
             // ← Viết code: setParentCount(c => c + 1)
           }}
         >
@@ -94,53 +94,50 @@ function ParentChild() {
         <div className="flex gap-20">
           {/* TODO 6: Render ChildA với props value={parentCount} */}
           {/* Uncomment dòng dưới khi ready */}
-          {/* <ChildA value={parentCount} /> */}
-          <div className="component-box child" style={{ flex: 1, opacity: 0.5 }}>
-            <span className="component-label">👶 ChildA (chưa implement)</span>
-            <p>Uncomment ChildA trong code</p>
-          </div>
+          <ChildA value={parentCount} />
 
           {/* TODO 7: Render ChildB không có props */}
           {/* Uncomment dòng dưới khi ready */}
-          {/* <ChildB /> */}
-          <div className="component-box child" style={{ flex: 1, opacity: 0.5 }}>
-            <span className="component-label">👶 ChildB (chưa implement)</span>
-            <p>Uncomment ChildB trong code</p>
-          </div>
+          <ChildB />
         </div>
       </div>
 
       {/* Observation box */}
-      <div className="card" style={{ marginTop: '20px', background: '#fff3cd' }}>
+      <div
+        className="card"
+        style={{ marginTop: "20px", background: "#fff3cd" }}
+      >
         <div className="card-body">
           <h4>👀 Quan sát:</h4>
-          <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
+          <ul style={{ paddingLeft: "20px", marginTop: "10px" }}>
             <li>Click "Update Parent State"</li>
             <li>Cả 3 render counts đều tăng!</li>
             <li>ChildB re-render DÙ không nhận props</li>
-            <li>Đây là <strong>default behavior</strong> của React</li>
+            <li>
+              Đây là <strong>default behavior</strong> của React
+            </li>
           </ul>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ===== CHILD A - Nhận props từ Parent =====
 interface ChildAProps {
-  value: number
+  value: number;
 }
 
 export function ChildA({ value }: ChildAProps) {
   // TODO 8: Tạo ref để đếm renders
-  const renderCount = useRef(0)
+  const renderCount = useRef(0);
 
   // TODO 9: useEffect để log và đếm renders
   useEffect(() => {
     // ← Viết code ở đây
     // renderCount.current += 1
     // console.log('👶 ChildA rendered!')
-  })
+  });
 
   return (
     <div className="component-box child" style={{ flex: 1 }}>
@@ -148,32 +145,28 @@ export function ChildA({ value }: ChildAProps) {
 
       {/* TODO 10: Hiển thị value và render count */}
       <p>
-        <strong>Value from Parent:</strong>{' '}
-        <span style={{ fontSize: '18px' }}>
-          {value}
-        </span>
+        <strong>Value from Parent:</strong>{" "}
+        <span style={{ fontSize: "18px" }}>{value}</span>
       </p>
       <p className="mt-10">
-        <strong>Render Count:</strong>{' '}
-        <span className="render-count">
-          {renderCount.current}
-        </span>
+        <strong>Render Count:</strong>{" "}
+        <span className="render-count">{renderCount.current}</span>
       </p>
     </div>
-  )
+  );
 }
 
 // ===== CHILD B - KHÔNG nhận props =====
 export function ChildB() {
   // TODO 11: Tạo ref để đếm renders
-  const renderCount = useRef(0)
+  const renderCount = useRef(0);
 
   // TODO 12: useEffect để log và đếm renders
   useEffect(() => {
     // ← Viết code ở đây
     // renderCount.current += 1
     // console.log('👶 ChildB rendered!')
-  })
+  });
 
   return (
     <div className="component-box child" style={{ flex: 1 }}>
@@ -183,16 +176,14 @@ export function ChildB() {
         <strong>I don't receive any props!</strong>
       </p>
       <p className="mt-10">
-        <strong>Render Count:</strong>{' '}
-        <span className="render-count">
-          {renderCount.current}
-        </span>
+        <strong>Render Count:</strong>{" "}
+        <span className="render-count">{renderCount.current}</span>
       </p>
-      <p className="mt-10" style={{ fontSize: '12px', color: '#666' }}>
+      <p className="mt-10" style={{ fontSize: "12px", color: "#666" }}>
         Yet I still re-render when Parent updates... 🤔
       </p>
     </div>
-  )
+  );
 }
 
-export default ParentChild
+export default ParentChild;

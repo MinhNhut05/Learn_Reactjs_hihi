@@ -1,12 +1,30 @@
 # PHASE 1: REACT FOUNDATION (Chi Tiết V2 - Fresher Focus)
 
-> Thời gian: 3 tuần (với 5h/ngày)
+> Thời gian: 2-3 tuần (với 5h/ngày)
 > Mục tiêu: Master TypeScript + React fundamentals + Hooks
-> Sessions: 13 (bao gồm 1 review session)
+> Sessions: 11 (review gộp cuối module, 2-3 bài tập/session)
 
 ---
 
-## 📅 MODULE 1.1: TypeScript cho React (4-5 days) - ĐÃ HỌC
+## 🎯 CÁCH HỌC (LEARNING FLOW)
+
+> Xem chi tiết: [LEARNING_STYLE.md](../rules/LEARNING_STYLE.md)
+
+**Flow cho mỗi session:**
+```
+PHASE 1: Đọc lý thuyết (45-60p) → Không code, chỉ đọc hiểu
+PHASE 2: Tóm tắt (15p)         → Claude tạo checklist để review
+PHASE 3: Làm bài tập (60-90p)  → Code tất cả exercises
+PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
+```
+
+**Bắt đầu session:** Nói `Bắt đầu session X.X.X theo LEARNING_STYLE`
+
+---
+
+## 📅 MODULE 1.1: TypeScript cho React (4-5 days) ✅ ĐÃ HỌC
+
+> Review: Gộp vào cuối module, không tách riêng session 1.1.R
 
 ### **Session 1.1.1: Props & State Typing (2-3h)** ✅ COMPLETED
 
@@ -153,9 +171,9 @@ Sau khi code xong, tự đánh giá:
 
 ---
 
-## 📅 MODULE 1.2: React Mental Model (3 days)
+## 📅 MODULE 1.2: React Mental Model (3 days) ✅ ĐÃ HỌC
 
-### **Session 1.2.1: Rendering & Re-rendering (2-3h)**
+### **Session 1.2.1: Rendering & Re-rendering (2-3h)** ✅ COMPLETED (8.6/10)
 
 > **MỨC ĐỘ:** Trung bình (hiểu batching, memo, optimization)
 
@@ -282,7 +300,7 @@ interface Todo {
 
 ---
 
-### **Session 1.2.2: One-way Data Flow (2h)**
+### **Session 1.2.2: One-way Data Flow (2h)** ✅ COMPLETED (10/10)
 
 > **MỨC ĐỘ:** Cơ bản (fundamental pattern)
 
@@ -425,11 +443,80 @@ interface FormState {
 
 ---
 
-### **Session 1.2.3: Component Composition (2h)**
+### **Session 1.2.3: Component Lifecycle (2h)** ✅ COMPLETED (8.7/10)
 
-> **MỨC ĐỘ:** Cơ bản (anti prop-drilling)
+> **MỨC ĐỘ:** Cơ bản (useEffect, cleanup, lifecycle)
 
-#### Concepts:
+**Thay đổi từ roadmap gốc:** Session này thay thế "Component Composition" - focus vào lifecycle và useEffect thay vì composition patterns
+
+#### Concepts (Lifecycle):
+
+**1. Component Lifecycle**
+- Mount: Component xuất hiện lần đầu trên DOM
+- Update: Component re-render do state/props thay đổi
+- Unmount: Component bị remove khỏi DOM
+
+**2. useEffect Hook**
+- Side effects: fetch data, timers, subscriptions, event listeners
+- Dependencies array: [], [deps], no array
+- Cleanup functions
+
+**3. Cleanup Patterns**
+- clearInterval, clearTimeout
+- removeEventListener
+- AbortController cho fetch requests
+
+---
+
+#### Bài tập:
+
+**Exercise 1: Lifecycle Logger (25 phút)**
+```typescript
+// YÊU CẦU:
+// 1. Component log khi mount/update/unmount
+// 2. useEffect với [] - mount only
+// 3. useEffect với [count] - track updates
+// 4. Cleanup function
+
+// TODO: Implement lifecycle logging
+```
+
+**Exercise 2: Timer with Cleanup (30 phút)**
+```typescript
+// YÊU CẦU:
+// 1. Countdown timer từ 10 → 0
+// 2. Start/Stop controls
+// 3. setInterval với proper cleanup
+// 4. Auto stop khi reaches 0
+
+// TODO: Implement timer với cleanup
+```
+
+---
+
+#### Knowledge Check (10 câu):
+
+1. Component lifecycle có mấy phases?
+2. useEffect với [] chạy khi nào?
+3. useEffect với [deps] chạy khi nào?
+4. Cleanup function chạy khi nào?
+5. Tại sao cần cleanup cho setInterval?
+6. Memory leak là gì?
+7. AbortController dùng để làm gì?
+8. useEffect chạy trước hay sau render?
+9. Functional update trong setState giải quyết vấn đề gì?
+10. Dependencies array missing có warning không?
+
+---
+
+### ~~**Session 1.2.3: Component Composition (2h)**~~ (Replaced by Lifecycle)
+
+> **DEPRECATED:** Nội dung này đã được thay thế bởi Session 1.2.3: Component Lifecycle ở trên
+
+<details>
+<summary>📦 Xem nội dung gốc (Component Composition)</summary>
+
+#### Concepts (Original):
 
 **1. Composition vs Inheritance**
 - React khuyến khích composition, không dùng inheritance
@@ -588,6 +675,8 @@ interface DataTableProps<T> {
 6. Prop drilling là vấn đề gì?
 7. Composition giải quyết prop drilling như thế nào?
 8. Khi nào dùng composition vs context?
+
+</details>
 
 ---
 
@@ -1514,14 +1603,23 @@ src/
 ## ✅ PHASE 1 COMPLETION CHECKLIST
 
 Hoàn thành Phase 1 khi:
-- [✅] Module 1.1: TypeScript cho React (4 sessions + 1 review)
-- [ ] Module 1.2: React Mental Model (3 sessions)
+- [✅] Module 1.1: TypeScript cho React (4 sessions) - Score: 9.5/10
+  - [✅] 1.1.1: Props & State Typing
+  - [✅] 1.1.2: Event Handlers Typing
+  - [✅] 1.1.3: Hooks với TypeScript
+  - [✅] 1.1.4: Utility Types & Advanced
+- [✅] Module 1.2: React Mental Model (3 sessions) - Score: 9.1/10
+  - [✅] 1.2.1: Rendering & Re-rendering (8.6/10)
+  - [✅] 1.2.2: One-way Data Flow (10/10)
+  - [✅] 1.2.3: Component Lifecycle (8.7/10)
 - [ ] Module 1.3: Hooks Deep Dive (4 sessions + 1 review)
 - [ ] Score ≥80% tất cả Knowledge Checks
 - [ ] Làm xong Mini Projects (2 projects)
 - [ ] Tự tin giải thích concepts cho người khác
 
-**Next:** Phase 2 - State Management & Backend
+**Progress: 7/13 sessions completed (54%)**
+
+**Next:** Session 1.3.1 - useEffect Deep Dive
 
 ---
 

@@ -1,7 +1,7 @@
 // 01-RenderCounter.tsx
 
 // TODO: Uncomment imports khi bạn implement
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect } from "react";
 
 /**
  * EXERCISE 1: Render Counter
@@ -33,34 +33,35 @@ import { useState, useRef, useEffect } from 'react'
 
 function RenderCounter() {
   // TODO 1: Tạo state cho count (number), khởi tạo = 0
-  const [count, setCount] = useState(0) // ← Uncomment và sửa
+  const [count, setCount] = useState(0); // ← Uncomment và sửa
 
   // TODO 2: Tạo ref để đếm số lần render
   // Hint: useRef<number>(0)
-  const renderCount = useRef(0) // ← Uncomment và sửa
+  const renderCount = useRef(0); // ← Uncomment và sửa
 
   // TODO 3: useEffect để log và tăng render count mỗi lần render
   // Hint: Không có dependency array = chạy sau mọi render
   useEffect(() => {
     // ← Viết code ở đây
-    // renderCount.current += 1
-    // console.log('Rendered!')
-  })
+    renderCount.current += 1;
+    console.log("Rendered!");
+  });
 
   // TODO 4: Handler cho button "Increment Count"
   // Hint: Dùng setCount để tăng count
   const handleIncrement = () => {
     // ← Viết code ở đây: setCount(...)
-    void count // Xóa dòng này khi implement
-    void setCount // Xóa dòng này khi implement
-  }
+    setCount((prev) => prev + 1);
+    console.log("📍 handleIncrement called");
+  };
 
   // TODO 5: Handler cho button "Do Nothing"
   // Hint: Chỉ console.log, KHÔNG gọi setState
   const handleDoNothing = () => {
     // ← Viết code ở đây: console.log(...)
-  }
-
+    console.log("📍 handleDoNothing called - No state change, no re-render!");
+  };
+  console.log("🔵 Rendering RenderCounterSolution component...");
   return (
     <div className="section">
       <h2 className="section-title">Exercise 1: Render Counter</h2>
@@ -70,7 +71,7 @@ function RenderCounter() {
           {/* TODO 6: Hiển thị render count */}
           {/* Thay ??? bằng renderCount.current */}
           <p>
-            <strong>Render Count:</strong>{' '}
+            <strong>Render Count:</strong>{" "}
             <span className="render-count">
               {renderCount.current /* ← Sửa ở đây */}
             </span>
@@ -79,26 +80,20 @@ function RenderCounter() {
           {/* TODO 7: Hiển thị current count state */}
           {/* Thay ??? bằng count */}
           <p className="mt-10">
-            <strong>Current Count:</strong>{' '}
-            <span style={{ fontSize: '24px', fontWeight: 'bold' }}>
-              {0 /* ← Thay bằng count */}
+            <strong>Current Count:</strong>{" "}
+            <span style={{ fontSize: "24px", fontWeight: "bold" }}>
+              {count /* ← Thay bằng count */}
             </span>
           </p>
 
           <div className="flex gap-10 mt-20">
             {/* TODO 8: Button Increment Count */}
-            <button
-              className="btn btn-primary"
-              onClick={handleIncrement}
-            >
+            <button className="btn btn-primary" onClick={handleIncrement}>
               Increment Count
             </button>
 
             {/* TODO 9: Button Do Nothing */}
-            <button
-              className="btn btn-secondary"
-              onClick={handleDoNothing}
-            >
+            <button className="btn btn-secondary" onClick={handleDoNothing}>
               Do Nothing
             </button>
           </div>
@@ -110,10 +105,13 @@ function RenderCounter() {
       </div>
 
       {/* Instruction box */}
-      <div className="card" style={{ marginTop: '20px', background: '#f0f7ff' }}>
+      <div
+        className="card"
+        style={{ marginTop: "20px", background: "#f0f7ff" }}
+      >
         <div className="card-body">
           <h4>📝 Hướng dẫn:</h4>
-          <ol style={{ paddingLeft: '20px', marginTop: '10px' }}>
+          <ol style={{ paddingLeft: "20px", marginTop: "10px" }}>
             <li>Click "Increment Count" → Quan sát render count tăng</li>
             <li>Click "Do Nothing" → Render count KHÔNG đổi</li>
             <li>Mở Console để xem log chi tiết</li>
@@ -121,7 +119,7 @@ function RenderCounter() {
         </div>
       </div>
     </div>
-  )
+  );
 }
 
-export default RenderCounter
+export default RenderCounter;

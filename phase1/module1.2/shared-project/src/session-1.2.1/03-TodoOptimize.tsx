@@ -1,6 +1,6 @@
 // 03-TodoOptimize.tsx
 
-import { useState, useRef, useEffect, memo, useCallback } from 'react'
+import { useState, useRef, useEffect, memo, useCallback } from "react";
 
 /**
  * EXERCISE 3: Todo App với Optimization
@@ -47,30 +47,30 @@ import { useState, useRef, useEffect, memo, useCallback } from 'react'
 
 // ===== TYPES =====
 interface Todo {
-  id: number
-  text: string
-  completed: boolean
+  id: number;
+  text: string;
+  completed: boolean;
 }
 
 // ===== PARENT: TODO APP =====
 function TodoOptimize() {
   // TODO 1: State cho todos array
   const [todos, setTodos] = useState<Todo[]>([
-    { id: 1, text: 'Learn React.memo', completed: false },
-    { id: 2, text: 'Learn useCallback', completed: false },
-  ])
+    { id: 1, text: "Learn React.memo", completed: false },
+    { id: 2, text: "Learn useCallback", completed: false },
+  ]);
 
   // TODO 2: State cho input value
-  const [inputValue, setInputValue] = useState('')
+  const [inputValue, setInputValue] = useState("");
 
   // TODO 3: Ref để đếm renders
-  const renderCount = useRef(0)
+  const renderCount = useRef(0);
 
   // TODO 4: useEffect để log và đếm renders
   useEffect(() => {
-    renderCount.current += 1
-    console.log('📱 TodoApp rendered!')
-  })
+    renderCount.current += 1;
+    console.log("📱 TodoApp rendered!");
+  });
 
   // TODO 5: Handler để add todo
   const handleAddTodo = () => {
@@ -78,12 +78,12 @@ function TodoOptimize() {
       const newTodo: Todo = {
         id: Date.now(),
         text: inputValue.trim(),
-        completed: false
-      }
-      setTodos(prev => [...prev, newTodo])
-      setInputValue('')
+        completed: false,
+      };
+      setTodos((prev) => [...prev, newTodo]);
+      setInputValue("");
     }
-  }
+  };
 
   // TODO 6: Handler để delete todo - DÙNG useCallback!
   // ❌ Không có useCallback - function mới mỗi render
@@ -93,25 +93,25 @@ function TodoOptimize() {
 
   // ✅ Có useCallback - function stable
   const handleDeleteTodo = useCallback((id: number) => {
-    console.log('🗑️ Deleting todo:', id)
-    setTodos(prev => prev.filter(todo => todo.id !== id))
-  }, []) // Empty deps vì dùng functional update
+    console.log("🗑️ Deleting todo:", id);
+    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  }, []); // Empty deps vì dùng functional update
 
   // TODO 7: Handler cho input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value)
-  }
+    setInputValue(e.target.value);
+  };
 
   // TODO 8: Handler cho Enter key
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      handleAddTodo()
+    if (e.key === "Enter") {
+      handleAddTodo();
     }
-  }
+  };
 
   // Tạm để tránh warning - xóa khi implement
-  void memo
-  void useCallback
+  void memo;
+  void useCallback;
 
   return (
     <div className="section">
@@ -122,10 +122,8 @@ function TodoOptimize() {
         <span className="component-label">📱 TodoApp (Parent)</span>
 
         <p className="mb-20">
-          <strong>Parent Render Count:</strong>{' '}
-          <span className="render-count">
-            {renderCount.current}
-          </span>
+          <strong>Parent Render Count:</strong>{" "}
+          <span className="render-count">{renderCount.current}</span>
         </p>
 
         {/* Input section */}
@@ -142,10 +140,7 @@ function TodoOptimize() {
           />
 
           {/* TODO 10: Add button */}
-          <button
-            className="btn btn-success"
-            onClick={handleAddTodo}
-          >
+          <button className="btn btn-success" onClick={handleAddTodo}>
             Add Todo
           </button>
         </div>
@@ -156,12 +151,19 @@ function TodoOptimize() {
       </div>
 
       {/* Observation box */}
-      <div className="card" style={{ marginTop: '20px', background: '#d4edda' }}>
+      <div
+        className="card"
+        style={{ marginTop: "20px", background: "#d4edda" }}
+      >
         <div className="card-body">
           <h4>✅ Kết quả mong đợi sau khi optimize:</h4>
-          <ul style={{ paddingLeft: '20px', marginTop: '10px' }}>
-            <li>Typing trong input → <strong>CHỈ Parent</strong> render count tăng</li>
-            <li>TodoList và TodoItem render count <strong>KHÔNG đổi</strong></li>
+          <ul style={{ paddingLeft: "20px", marginTop: "10px" }}>
+            <li>
+              Typing trong input → <strong>CHỈ Parent</strong> render count tăng
+            </li>
+            <li>
+              TodoList và TodoItem render count <strong>KHÔNG đổi</strong>
+            </li>
             <li>Add todo → TodoList re-render (expected)</li>
             <li>Delete todo → TodoList re-render (expected)</li>
           </ul>
@@ -169,19 +171,28 @@ function TodoOptimize() {
       </div>
 
       {/* Tips box */}
-      <div className="card" style={{ marginTop: '20px', background: '#e2e3ff' }}>
+      <div
+        className="card"
+        style={{ marginTop: "20px", background: "#e2e3ff" }}
+      >
         <div className="card-body">
           <h4>💡 Tips để Optimize:</h4>
-          <ol style={{ paddingLeft: '20px', marginTop: '10px' }}>
-            <li>Wrap <code>TodoList</code> với <code>React.memo</code></li>
-            <li>Wrap <code>TodoItem</code> với <code>React.memo</code></li>
-            <li>Dùng <code>useCallback</code> cho <code>handleDeleteTodo</code></li>
+          <ol style={{ paddingLeft: "20px", marginTop: "10px" }}>
+            <li>
+              Wrap <code>TodoList</code> với <code>React.memo</code>
+            </li>
+            <li>
+              Wrap <code>TodoItem</code> với <code>React.memo</code>
+            </li>
+            <li>
+              Dùng <code>useCallback</code> cho <code>handleDeleteTodo</code>
+            </li>
             <li>Dùng functional update trong setTodos để tránh dependency</li>
           </ol>
         </div>
       </div>
     </div>
-  )
+  );
 }
 
 // ===== TODO LIST COMPONENT =====
@@ -189,79 +200,71 @@ function TodoOptimize() {
 // Thay: function TodoList(...) → const TodoList = memo(function TodoList(...))
 
 interface TodoListProps {
-  todos: Todo[]
-  onDelete: (id: number) => void
+  todos: Todo[];
+  onDelete: (id: number) => void;
 }
 
 // ❌ Chưa optimize - re-render mỗi khi parent re-render
-function TodoList({ todos, onDelete }: TodoListProps) {
-// ✅ Đã optimize - chỉ re-render khi props thay đổi
-// const TodoList = memo(function TodoList({ todos, onDelete }: TodoListProps) {
+const TodoList = memo(function TodoList({ todos, onDelete }: TodoListProps) {
+  const renderCount = useRef(0);
 
-  // TODO 13: Ref và useEffect để đếm renders
-  const renderCount = useRef(0)
   useEffect(() => {
-    renderCount.current += 1
-    console.log('📋 TodoList rendered!')
-  })
+    renderCount.current += 1;
+    console.log("📋 TodoList rendered!");
+  });
+
+  console.log("🟢 Rendering TodoList...");
 
   return (
-    <div className="component-box child" style={{ marginTop: '20px' }}>
-      <span className="component-label">📋 TodoList</span>
+    <div className="component-box child" style={{ marginTop: "20px" }}>
+      <span className="component-label">📋 TodoList (memoized)</span>
 
       <p className="mb-10">
-        <strong>TodoList Render Count:</strong>{' '}
-        <span className="render-count">
-          {renderCount.current}
-        </span>
+        <strong>TodoList Render Count:</strong>{" "}
+        <span className="render-count">{renderCount.current}</span>
       </p>
 
       {todos.length === 0 ? (
-        <p style={{ color: '#666', fontStyle: 'italic' }}>
+        <p style={{ color: "#666", fontStyle: "italic" }}>
           No todos yet. Add one above!
         </p>
       ) : (
         <div className="list">
-          {todos.map(todo => (
-            // TODO 14: Render TodoItem với props
+          {todos.map((todo) => (
             <TodoItem key={todo.id} todo={todo} onDelete={onDelete} />
           ))}
         </div>
       )}
     </div>
-  )
-}
-// }) // ← Uncomment khi dùng memo
+  );
+});
 
 // ===== TODO ITEM COMPONENT =====
 // TODO 15: Wrap với React.memo
 
 interface TodoItemProps {
-  todo: Todo
-  onDelete: (id: number) => void
+  todo: Todo;
+  onDelete: (id: number) => void;
 }
 
 // ❌ Chưa optimize
 function TodoItem({ todo, onDelete }: TodoItemProps) {
-// ✅ Đã optimize
-// const TodoItem = memo(function TodoItem({ todo, onDelete }: TodoItemProps) {
+  // ✅ Đã optimize
+  // const TodoItem = memo(function TodoItem({ todo, onDelete }: TodoItemProps) {
 
   // TODO 16: Ref và useEffect để đếm renders
-  const renderCount = useRef(0)
+  const renderCount = useRef(0);
   useEffect(() => {
-    renderCount.current += 1
-    console.log(`📝 TodoItem "${todo.text}" rendered!`)
-  })
+    renderCount.current += 1;
+    console.log(`📝 TodoItem "${todo.text}" rendered!`);
+  });
 
   return (
     <div className="todo-item">
       <span className="todo-text">{todo.text}</span>
 
       {/* Render count badge */}
-      <span
-        className="badge badge-primary"
-        style={{ marginRight: '10px' }}
-      >
+      <span className="badge badge-primary" style={{ marginRight: "10px" }}>
         renders: {renderCount.current}
       </span>
 
@@ -274,8 +277,8 @@ function TodoItem({ todo, onDelete }: TodoItemProps) {
         ×
       </button>
     </div>
-  )
+  );
 }
 // }) // ← Uncomment khi dùng memo
 
-export default TodoOptimize
+export default TodoOptimize;

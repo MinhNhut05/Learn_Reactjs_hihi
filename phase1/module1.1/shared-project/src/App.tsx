@@ -27,12 +27,18 @@
 // import Ex2_PropsExtractor from './session-1.1.4/02-PropsExtractor'
 // import Ex3_AdvancedPatterns from './session-1.1.4/03-AdvancedPatterns'
 
+// ===== REVIEW EXERCISES =====
+// import TodoApp1 from "./review-exercises/01-TodoApp-Solution";
+// import TodoApp from "./review-exercises/01-TodoApp";
+import ContactForm from "./review-exercises/02-ContactForm";
+// import UserDashboard from "./review-exercises/03-UserDashboard-Solution";
+
 export default function App() {
   return (
     <div className="app-container">
-      <h1 style={{ marginBottom: "30px", color: "#333" }}>
+      {/* <h1 style={{ marginBottom: "30px", color: "#333" }}>
         Module 1.1 - TypeScript cho React
-      </h1>
+      </h1> */}
 
       {/* ===== SESSION 1.1.1: Props & State Typing ===== */}
       <section className="section">
@@ -101,9 +107,9 @@ export default function App() {
 
       {/* ===== SESSION 1.1.4: Utility Types ===== */}
       <section className="section">
-        <h2 className="section-title">
+        {/* <h2 className="section-title">
           Session 1.1.4: Utility Types & Advanced
-        </h2>
+        </h2> */}
 
         <div className="exercise-container">
           <h3 className="exercise-title">Exercise 1: Form Builder</h3>
@@ -119,6 +125,15 @@ export default function App() {
           <h3 className="exercise-title">Exercise 3: Advanced Patterns</h3>
           <Ex3_AdvancedPatterns />
         </div> */}
+      </section>
+
+      {/* ===== REVIEW EXERCISES ===== */}
+      <section className="section">
+        {/* <h2 className="section-title">Review Exercise: Todo App</h2> */}
+        {/* <TodoApp /> */}
+        {/* <TodoApp1 /> */}
+        <ContactForm />
+        {/* <UserDashboard /> */}
       </section>
     </div>
   );
