@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "./styles/components.css";
+
+/* ========================================
+   DESIGN SYSTEM - Session 1.5.5
+   E-commerce Theme: Green (Eco/Fresh)
+   ======================================== */
+
+@theme {
+  /* ----------------------------------------
+     BRAND COLORS - Green (Eco/Fresh)
+     ---------------------------------------- */
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce7;
+  --color-brand-200: #bbf7d0;
+  --color-brand-300: #86efac;
+  --color-brand-400: #4ade80;
+  --color-brand-500: #22c55e;   /* Primary */
+  --color-brand-600: #16a34a;   /* Hover */
+  --color-brand-700: #15803d;   /* Active */
+  --color-brand-800: #166534;
+  --color-brand-900: #14532d;   /* Text dark */
+
+  /* ----------------------------------------
+     ACCENT COLORS - Amber (Deals/Sales)
+     ---------------------------------------- */
+  --color-accent-50: #fffbeb;
+  --color-accent-100: #fef3c7;
+  --color-accent-500: #f59e0b;
+  --color-accent-600: #d97706;
+
+  /* ----------------------------------------
+     SEMANTIC COLORS
+     ---------------------------------------- */
+  --color-success: #22c55e;
+  --color-error: #ef4444;
+  --color-warning: #f59e0b;
+  --color-info: #3b82f6;
+
+  /* ----------------------------------------
+     CUSTOM SPACING
+     ---------------------------------------- */
+  --spacing-18: 4.5rem;
+  --spacing-88: 22rem;
+
+  /* ----------------------------------------
+     CUSTOM SHADOWS
+     ---------------------------------------- */
+  --shadow-soft: 0 4px 6px -1px rgb(0 0 0 / 0.05), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+  --shadow-card: 0 10px 15px -3px rgb(0 0 0 / 0.08), 0 4px 6px -4px rgb(0 0 0 / 0.05);
+}
+
+/* ========================================
+   CSS VARIABLES FOR DYNAMIC THEMING
+   ======================================== */
+
+:root {
+  /* Light mode defaults */
+  --surface-primary: #ffffff;
+  --surface-secondary: #f9fafb;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+}
+
+/* Dark mode (class-based) */
+.dark {
+  --surface-primary: #1f2937;
+  --surface-secondary: #111827;
+  --text-primary: #f9fafb;
+  --text-secondary: #9ca3af;
+}

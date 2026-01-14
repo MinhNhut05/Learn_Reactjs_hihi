@@ -1,9 +1,8 @@
-# PHASE 4: TESTING & AI INTEGRATION (V2)
+# PHASE 4: TESTING BASICS (V2.1 - Job Ready)
 
-> Thời gian: 1.5-2 tuần (với 5h/ngày)
-> Mục tiêu: Testing basics + AI Integration
-> Sessions: 5 (2-3 bài tập/session, review gộp cuối)
-> Capstone: AI-Powered Task Manager
+> Thời gian: 3-4 ngày (với 5h/ngày)
+> Mục tiêu: Testing basics để đủ dùng cho job
+> Sessions: 2 (1-2 bài tập/session, tập trung core skills)
 
 ---
 
@@ -15,9 +14,16 @@
 ```
 PHASE 1: Đọc lý thuyết (45-60p) → Không code, chỉ đọc hiểu
 PHASE 2: Tóm tắt (15p)         → Claude tạo checklist để review
-PHASE 3: Làm bài tập (60-90p)  → Code tất cả exercises
+PHASE 3: Làm bài tập (60-90p)  → Code exercises (1-2 bài tập quan trọng)
 PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 ```
+
+---
+
+## ⚠️ LƯU Ý
+
+> **AI Integration module đã được bỏ** để tập trung vào core skills cần cho job.
+> Bạn có thể tự học AI Integration sau khi đi làm nếu cần.
 
 ---
 
@@ -32,45 +38,67 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Mocking modules
 - Coverage reports
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: Test Components (60 phút)**
+**🔸 Mini: Counter Tests (20 phút)**
 ```typescript
-// YÊU CẦU:
-// Test Button component:
-// - Renders correctly
-// - Handles click events
-// - Shows loading state
-// - Disabled state
-
 // Test Counter component:
-// - Initial value
-// - Increment/Decrement
+// - Initial render
+// - Increment click
+// - Decrement click
 // - Reset functionality
+
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import { describe, it, expect } from 'vitest'
+import Counter from './Counter'
+
+describe('Counter', () => {
+  it('renders initial count of 0', () => {
+    render(<Counter />)
+    expect(screen.getByText('0')).toBeInTheDocument()
+  })
+
+  it('increments count when + button clicked', async () => {
+    render(<Counter />)
+    await userEvent.click(screen.getByRole('button', { name: '+' }))
+    expect(screen.getByText('1')).toBeInTheDocument()
+  })
+
+  it('decrements count when - button clicked', async () => {
+    render(<Counter />)
+    await userEvent.click(screen.getByRole('button', { name: '-' }))
+    expect(screen.getByText('-1')).toBeInTheDocument()
+  })
+})
 ```
 
-**Exercise 2: Test Custom Hooks (45 phút)**
+**🔶 Real: E-commerce Component Tests (45 phút)**
 ```typescript
-// YÊU CẦU:
-// Test useCounter hook:
-// - Initial value
-// - increment, decrement, reset
-// - Edge cases
-
-// Test useLocalStorage hook:
-// - Get/set values
-// - Persist after re-render
+// Viết tests cho E-commerce components:
+//
+// PRODUCT CARD:
+// - Renders product info correctly
+// - Add to Cart button works
+// - Shows sale badge when on sale
+//
+// CART:
+// - Displays cart items
+// - Updates quantity
+// - Shows correct total
+//
+// Sử dụng Vitest + React Testing Library
 ```
 
 #### Knowledge Check (8 câu):
 1. Vitest vs Jest?
-2. @testing-library/react?
-3. render() function?
-4. screen queries (getBy, queryBy, findBy)?
+2. @testing-library/react là gì?
+3. render() function trả về gì?
+4. screen queries (getBy, queryBy, findBy) khác gì?
 5. userEvent vs fireEvent?
-6. waitFor?
-7. Mocking modules?
-8. Test coverage?
+6. waitFor dùng khi nào?
+7. Mocking modules với vi.mock()?
+8. Test coverage là gì?
 
 ---
 
@@ -82,254 +110,96 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Testing API calls (MSW)
 - Testing React Query
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: Test Login Form (60 phút)**
+**🔸 Mini: Form Submission Test (25 phút)**
 ```typescript
-// YÊU CẦU:
-// Test LoginForm:
-// - Input validation
-// - Form submission
-// - Success/error states
-// - Redirect after login
+// Test login form:
+// - Fill inputs
+// - Submit form
+// - Mock API response
+// - Verify success/error UI
 
-// Mock API với MSW
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
+
+const server = setupServer(
+  rest.post('/api/login', (req, res, ctx) => {
+    return res(ctx.json({ token: 'fake-token', user: { name: 'John' } }))
+  })
+)
+
+beforeAll(() => server.listen())
+afterEach(() => server.resetHandlers())
+afterAll(() => server.close())
+
+describe('LoginForm', () => {
+  it('submits form and shows success', async () => {
+    render(<LoginForm />)
+    
+    await userEvent.type(screen.getByLabelText('Email'), 'test@example.com')
+    await userEvent.type(screen.getByLabelText('Password'), 'password123')
+    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+    
+    await waitFor(() => {
+      expect(screen.getByText('Welcome, John!')).toBeInTheDocument()
+    })
+  })
+
+  it('shows error on failed login', async () => {
+    server.use(
+      rest.post('/api/login', (req, res, ctx) => {
+        return res(ctx.status(401), ctx.json({ message: 'Invalid credentials' }))
+      })
+    )
+    
+    render(<LoginForm />)
+    await userEvent.type(screen.getByLabelText('Email'), 'test@example.com')
+    await userEvent.type(screen.getByLabelText('Password'), 'wrong')
+    await userEvent.click(screen.getByRole('button', { name: 'Login' }))
+    
+    await waitFor(() => {
+      expect(screen.getByText('Invalid credentials')).toBeInTheDocument()
+    })
+  })
+})
 ```
 
-**Exercise 2: Test Data Fetching (45 phút)**
+**🔶 Real: E-commerce Integration Tests (45 phút)**
 ```typescript
-// YÊU CẦU:
-// Test UsersList component:
-// - Loading state
-// - Success với data
-// - Error state
-// - Empty state
-
-// Test với React Query wrapper
+// Integration tests cho E-commerce:
+//
+// CHECKOUT FLOW:
+// - Add product to cart
+// - Go to cart
+// - Update quantity
+// - Proceed to checkout
+// - Verify total
+//
+// Mock APIs với MSW
+// Test user journey cơ bản
 ```
 
 #### Knowledge Check (8 câu):
 1. Integration test vs Unit test?
-2. MSW (Mock Service Worker)?
+2. MSW (Mock Service Worker) là gì?
 3. Testing loading states?
 4. React Query wrapper cho tests?
-5. Async testing?
-6. act() warning?
+5. Async testing với waitFor?
+6. act() warning là gì?
 7. Cleanup between tests?
-8. Test database/API?
-
----
-
-## 📅 MODULE 4.2: AI Integration (3 sessions)
-
-### **Session 4.2.1: OpenAI API Basics (2-3h)**
-
-#### Concepts:
-- OpenAI API setup
-- Chat completions
-- System prompts
-- Temperature & parameters
-- Error handling & rate limits
-
-#### Bài tập (2 bài):
-
-**Exercise 1: Simple Chatbot (60 phút)**
-```typescript
-// YÊU CẦU:
-// 1. Next.js API route cho OpenAI
-// 2. Chat interface UI
-// 3. Send message → get response
-// 4. Loading state
-// 5. Error handling
-// 6. Environment variables
-
-// API: /api/chat
-// POST { message: string }
-// Response: { reply: string }
-```
-
-**Exercise 2: System Prompts (45 phút)**
-```typescript
-// YÊU CẦU:
-// Chatbot với different personas:
-// 1. Helpful assistant
-// 2. Code reviewer
-// 3. Language tutor
-
-// Switch persona → different system prompt
-```
-
-#### Knowledge Check (8 câu):
-1. OpenAI API key security?
-2. Chat completions vs Completions?
-3. System prompt là gì?
-4. Temperature parameter?
-5. max_tokens?
-6. Rate limiting?
-7. Streaming responses?
-8. Cost estimation?
-
----
-
-### **Session 4.2.2: Streaming & UI (2-3h)**
-
-#### Concepts:
-- Streaming responses
-- AI SDK (Vercel)
-- Typewriter effect
-- Markdown rendering
-- Conversation history
-
-#### Bài tập (2 bài):
-
-**Exercise 1: Streaming Chat (60 phút)**
-```typescript
-// YÊU CẦU:
-// 1. Streaming response từ OpenAI
-// 2. Typewriter effect khi nhận chunks
-// 3. Cancel generation button
-// 4. Render markdown trong response
-
-// Dùng Vercel AI SDK
-import { useChat } from 'ai/react'
-```
-
-**Exercise 2: Conversation Memory (45 phút)**
-```typescript
-// YÊU CẦU:
-// 1. Lưu conversation history
-// 2. Send history với mỗi request
-// 3. Clear conversation button
-// 4. Max context window handling
-```
-
-#### Knowledge Check (8 câu):
-1. Streaming vs non-streaming?
-2. Vercel AI SDK?
-3. useChat hook?
-4. ReadableStream?
-5. Token counting?
-6. Context window?
-7. Markdown rendering (react-markdown)?
-8. Syntax highlighting (code blocks)?
-
----
-
-### **Session 4.2.3: AI Features in Apps (2-3h)**
-
-#### Concepts:
-- Text generation use cases
-- Structured output (JSON mode)
-- Function calling
-- Embeddings basics
-
-#### Bài tập (2 bài):
-
-**Exercise 1: AI Task Generator (60 phút)**
-```typescript
-// YÊU CẦU:
-// Input: Project description
-// Output: List of tasks với:
-// - title
-// - description
-// - priority (high/medium/low)
-// - estimated time
-
-// Dùng JSON mode cho structured output
-```
-
-**Exercise 2: Smart Search (60 phút)**
-```typescript
-// YÊU CẦU:
-// 1. Input: Natural language query
-// 2. AI extracts: filters, sort, keywords
-// 3. Apply to product search
-// 4. Show AI explanation
-
-// Example:
-// Input: "Show me cheap laptops under 1000$"
-// AI extracts: { category: "laptop", maxPrice: 1000, sort: "price-asc" }
-```
-
-#### Knowledge Check (8 câu):
-1. JSON mode?
-2. Function calling?
-3. Structured output benefits?
-4. Prompt engineering basics?
-5. Error handling for AI?
-6. Fallback khi AI fail?
-7. AI response validation?
-8. User feedback loop?
-
----
-
-## 🎯 CAPSTONE PROJECT: AI-Powered Task Manager
-
-### **Project Requirements (2-3 tuần)**
-
-Build full-stack Task Manager với AI features:
-
-**Core Features:**
-- [ ] Authentication (NextAuth)
-- [ ] CRUD tasks (Server Actions)
-- [ ] Categories & tags
-- [ ] Due dates & priorities
-- [ ] Search & filter
-
-**AI Features:**
-- [ ] **AI Task Generator:** Describe project → AI generates tasks
-- [ ] **Priority Suggester:** AI suggests priority based on description
-- [ ] **Daily Summary:** AI summarizes today's tasks
-- [ ] **Smart Search:** Natural language search
-
-**Technical Stack:**
-- [ ] Next.js 14 App Router
-- [ ] TypeScript
-- [ ] Tailwind CSS
-- [ ] Zustand (client state)
-- [ ] React Query (server state)
-- [ ] OpenAI API
-- [ ] Database (Prisma + PostgreSQL)
-- [ ] Deploy to Vercel
-
-**Project Structure:**
-```
-app/
-├── (auth)/
-│   ├── login/
-│   └── register/
-├── (app)/
-│   ├── dashboard/
-│   ├── tasks/
-│   │   ├── [id]/
-│   │   └── new/
-│   └── settings/
-├── api/
-│   ├── ai/
-│   │   ├── generate-tasks/
-│   │   ├── suggest-priority/
-│   │   └── daily-summary/
-│   └── tasks/
-```
-
-**Milestones:**
-1. Week 1: Core CRUD + Auth
-2. Week 2: AI Features
-3. Week 3: Polish + Deploy
+8. Khi nào cần mock API?
 
 ---
 
 ## ✅ PHASE 4 COMPLETION CHECKLIST
 
 Hoàn thành Phase 4 khi:
-- [ ] Biết testing basics với Vitest
-- [ ] Integration testing với MSW
-- [ ] OpenAI API integration
-- [ ] Streaming responses
-- [ ] Structured AI output
-- [ ] Làm xong Capstone Project
+- [ ] Setup được Vitest + React Testing Library
+- [ ] Viết được unit tests cho components
+- [ ] Viết được integration tests với MSW
+- [ ] Hiểu testing best practices
 - [ ] Score ≥80% tất cả Knowledge Checks
-- [ ] Deployed production app
 
 ---
 
@@ -337,18 +207,30 @@ Hoàn thành Phase 4 khi:
 
 Hoàn thành khóa học khi:
 - [ ] ✅ Phase 1: React Foundation
-- [ ] ✅ Phase 1.5: Tailwind CSS
-- [ ] ✅ Phase 2: State Management
-- [ ] ✅ Phase 3: Next.js
-- [ ] ✅ Phase 4: Testing & AI
-- [ ] ✅ Capstone Project deployed
+- [ ] ✅ Phase 1.5: Tailwind CSS → E-commerce UI
+- [ ] ✅ Phase 2: State Management (RTK + Zustand + React Query)
+- [ ] ✅ Phase 3: Next.js → E-commerce Full-stack
+- [ ] ✅ Phase 4: Testing Basics
+- [ ] ✅ Có thể demo projects
 
-**You are now a Fresher/Junior React Developer!**
+**You are now a Job-Ready React Developer!**
+
+**Portfolio Projects:**
+1. E-commerce với Next.js (Phase 1.5 + 3)
+2. Social App (Phase 2)
+
+**Skills để nói trong phỏng vấn:**
+- React + TypeScript
+- Redux Toolkit & Zustand (state management)
+- React Query (data fetching)
+- Next.js (SSR, App Router)
+- Tailwind CSS
+- Testing với Vitest
 
 **Next Steps:**
-- Apply for jobs
-- Build more projects
-- Learn advanced patterns
+- Apply for jobs với portfolio
+- Học thêm AI Integration nếu cần (sau khi đi làm)
+- Build thêm projects
 - Contribute to open source
 
 ---
@@ -360,18 +242,16 @@ Hoàn thành khóa học khi:
 - https://testing-library.com/docs/react-testing-library/intro/
 - https://mswjs.io/
 
-**AI:**
-- https://platform.openai.com/docs
-- https://sdk.vercel.ai/docs
-- Prompt Engineering Guide
+**Best Practices:**
+- Kent C. Dodds: Testing Library guides
+- Testing Trophy (Unit → Integration → E2E)
 
 ---
 
-**VERSION:** 2.0 (V2 - Fresher Optimized)
-**DATE:** 2025-01-04
+**VERSION:** 2.1 (Job-Ready Focus)
+**DATE:** 2025-01-13
 **CHANGES:**
-- Bỏ Backend module (chuyển ra khỏi scope)
-- Giữ AI Integration
-- Testing basics only (không advanced)
-- 2-3 exercises/session
-- Capstone project cuối cùng
+- Bỏ AI Integration module (3 sessions) để tập trung core skills
+- Giữ Testing Basics (2 sessions)
+- Rút gọn exercises
+- Cập nhật completion checklist

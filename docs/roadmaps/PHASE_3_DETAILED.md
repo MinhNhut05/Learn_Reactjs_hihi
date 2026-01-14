@@ -32,30 +32,51 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Dynamic routes [slug]
 - Loading và Error UI
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: Multi-page Website (60 phút)**
+**🔹 Micro 1: Dynamic Route (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Structure:
-// - Home (/)
-// - About (/about)
-// - Blog (/blog, /blog/[slug])
-// - Contact (/contact)
-
-// Features:
-// - Shared layout với header/footer
-// - Nested layout cho blog
-// - Loading UI cho mỗi route
-// - not-found page
+// Tạo file cho route /products/[id]
+// Log params.id trong component
 ```
 
-**Exercise 2: Route Groups (45 phút)**
+**🔹 Micro 2: Layout Component (5 phút)**
 ```typescript
-// YÊU CẦU:
-// (marketing) group: landing, pricing, about
-// (app) group: dashboard, settings
-// Different layouts cho mỗi group
+// Tạo layout.tsx với header chung
+// Children render bên dưới header
+```
+
+**🔸 Mini: Basic Routes (15 phút)**
+```typescript
+// Tạo cấu trúc routes:
+// - / (home)
+// - /products
+// - /products/[id]
+// - /cart
+// - Shared layout với navigation
+```
+
+**🔶 Real: E-commerce Routes Setup (45 phút)**
+```typescript
+// Setup routing cho E-commerce với Next.js:
+//
+// (marketing) group:
+// - / (landing page)
+// - /about
+//
+// (shop) group:
+// - /products (listing)
+// - /products/[category] (category page)
+// - /products/[category]/[id] (product detail)
+// - /cart
+// - /checkout
+//
+// Layout riêng cho mỗi group
+// Loading UI cho product pages
+// Not-found page
+//
+// Tiếp tục build từ Social App Phase 2
+// Chuyển đổi sang Next.js App Router
 ```
 
 #### Knowledge Check (8 câu):
@@ -79,26 +100,44 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Composition patterns
 - Data fetching in Server Components
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: Blog với Server Components (60 phút)**
+**🔹 Micro 1: Server Component Fetch (5 phút)**
 ```typescript
-// YÊU CẦU:
-// - Posts list: Server Component (fetch data)
-// - Like button: Client Component (interactive)
-// - Post detail: Server Component
-// - Comments form: Client Component
-
-// Implement proper composition
+// Viết async Server Component
+// Fetch data trực tiếp trong component (không useEffect)
 ```
 
-**Exercise 2: Dashboard Layout (45 phút)**
+**🔹 Micro 2: "use client" Boundary (5 phút)**
 ```typescript
-// YÊU CẦU:
-// - Sidebar: Client (interactive toggle)
-// - Main content: Server (fetch data)
-// - User menu: Client (dropdown)
-// - Stats cards: Server (fetch from API)
+// Tạo Client Component với useState
+// Import vào Server Component
+```
+
+**🔸 Mini: Mixed Components (15 phút)**
+```typescript
+// ProductCard component:
+// - Server: fetch product data, render static info
+// - Client: "Add to Cart" button (onClick)
+// - Đúng composition pattern
+```
+
+**🔶 Real: E-commerce Product Pages (45 phút)**
+```typescript
+// Xây dựng product pages với đúng component type:
+//
+// PRODUCTS LIST PAGE (Server):
+// - Fetch products từ API
+// - Render ProductCard grid
+// - Filter sidebar (Client component cho interactive)
+//
+// PRODUCT DETAIL PAGE:
+// - Product info (Server - SEO)
+// - Image gallery (Client - interactive)
+// - Add to Cart button (Client)
+// - Reviews section (Server fetch + Client form)
+//
+// Tích hợp với project E-commerce từ session trước
 ```
 
 #### Knowledge Check (10 câu):
@@ -123,26 +162,46 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Revalidation: time-based, on-demand
 - generateStaticParams
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: Posts với Different Strategies (60 phút)**
+**🔹 Micro 1: Fetch với Cache (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Static posts (ISG) - cache forever
-// 2. Revalidate every 60s
-// 3. Dynamic (no cache) - real-time data
-// 4. On-demand revalidation với tag
-
-// So sánh behavior của mỗi strategy
+// Fetch với force-cache (default)
+// Fetch với no-store (dynamic)
 ```
 
-**Exercise 2: Product Pages với generateStaticParams (45 phút)**
+**🔹 Micro 2: Revalidate (5 phút)**
 ```typescript
-// YÊU CẦU:
-// /products/[category]/[id]
-// - generateStaticParams cho top 10 products
-// - fallback: blocking cho rest
-// - Revalidate after 1 hour
+// Thêm revalidate: 60 vào fetch
+// Hiểu ISR hoạt động như thế nào
+```
+
+**🔸 Mini: Static vs Dynamic (15 phút)**
+```typescript
+// Tạo 2 pages:
+// - /products: Static (build time)
+// - /products/[id]: Dynamic hoặc ISR
+// So sánh behavior
+```
+
+**🔶 Real: E-commerce Caching Strategy (45 phút)**
+```typescript
+// Áp dụng caching cho E-commerce:
+//
+// STATIC (force-cache):
+// - Categories list
+// - Featured products (revalidate mỗi giờ)
+//
+// ISR (revalidate):
+// - Product detail pages (revalidate 60s)
+// - generateStaticParams cho top 20 products
+//
+// DYNAMIC (no-store):
+// - Cart page (user-specific)
+// - Checkout
+// - User profile
+//
+// Implement revalidateTag cho product updates
 ```
 
 #### Knowledge Check (10 câu):
@@ -168,26 +227,47 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Validation với Zod
 - Revalidation after mutations
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: Contact Form (60 phút)**
+**🔹 Micro 1: Basic Server Action (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Form với Server Action
-// 2. Validation (zod)
-// 3. useFormStatus for pending state
-// 4. Success/error messages
-// 5. Works without JS (progressive enhancement)
+// Tạo Server Action đơn giản
+// Log formData trong action
 ```
 
-**Exercise 2: CRUD Todo App (60 phút)**
+**🔹 Micro 2: useFormStatus (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Create todo - Server Action
-// 2. Toggle complete - Server Action
-// 3. Delete todo - Server Action
-// 4. revalidatePath after mutations
-// 5. Optimistic updates với useOptimistic
+// Tạo SubmitButton với useFormStatus
+// Disable khi pending
+```
+
+**🔸 Mini: Contact Form (20 phút)**
+```typescript
+// Form với Server Action:
+// - Input fields (name, email, message)
+// - Validation với Zod
+// - useFormStatus cho loading
+// - Success/error message
+```
+
+**🔶 Real: E-commerce Cart & Checkout (45 phút)**
+```typescript
+// Xây dựng cart system với Server Actions:
+//
+// CART ACTIONS:
+// - addToCart(productId, quantity)
+// - updateQuantity(itemId, quantity)
+// - removeFromCart(itemId)
+// - revalidatePath sau mỗi action
+//
+// CHECKOUT FORM:
+// - Shipping info form
+// - Zod validation
+// - useFormState cho errors
+// - useOptimistic cho cart updates
+// - Redirect sau khi order thành công
+//
+// Hoàn thiện flow mua hàng
 ```
 
 #### Knowledge Check (8 câu):
@@ -211,27 +291,49 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 - Vercel deployment
 - Environment variables
 
-#### Bài tập (2 bài):
+#### Bài tập:
 
-**Exercise 1: SEO-optimized Blog (45 phút)**
+**🔹 Micro 1: Static Metadata (5 phút)**
 ```typescript
-// YÊU CẦU:
-// - Static metadata cho homepage
-// - Dynamic metadata cho blog posts
-// - Open Graph images
-// - Twitter cards
-// - Generate sitemap.xml
-// - robots.txt
+// Export metadata object cho page
+// Title, description, keywords
 ```
 
-**Exercise 2: Deploy to Vercel (30 phút)**
+**🔹 Micro 2: Dynamic Metadata (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Push to GitHub
-// 2. Connect Vercel
-// 3. Setup environment variables
-// 4. Custom domain (optional)
-// 5. Preview deployments
+// generateMetadata function cho [id] page
+// Fetch data để tạo title động
+```
+
+**🔸 Mini: SEO Setup (15 phút)**
+```typescript
+// Setup SEO cho products:
+// - Static metadata cho /products
+// - Dynamic metadata cho /products/[id]
+// - Open Graph image
+```
+
+**🔶 Real: E-commerce SEO & Deploy (45 phút)**
+```typescript
+// Hoàn thiện SEO cho E-commerce:
+//
+// METADATA:
+// - Homepage: brand metadata
+// - Products: dynamic title, description
+// - Product detail: OG image, Twitter card
+//
+// TECHNICAL SEO:
+// - sitemap.ts (all products)
+// - robots.ts
+// - Canonical URLs
+//
+// DEPLOYMENT:
+// - Push to GitHub
+// - Deploy to Vercel
+// - Setup environment variables
+// - Test production build
+//
+// Đây là project hoàn chỉnh của Phase 3!
 ```
 
 #### Knowledge Check (8 câu):
@@ -246,36 +348,60 @@ PHASE 4: Quiz (15-30p)         → Knowledge Check, pass ≥80%
 
 ---
 
-## 🎯 MODULE 3.R: Review & Mini Project
+## 🎯 MODULE 3.R: Review & Project Completion
 
-### **Mini Project: Blog Platform (6-8h)**
+> Review + Hoàn thiện E-commerce Next.js
 
-**Yêu cầu:**
-Full-stack blog với Next.js App Router:
+### **Review Challenges (1h)**
 
-**Features:**
-- [ ] Homepage với latest posts (SSG)
-- [ ] Blog post detail (/blog/[slug])
-- [ ] Contact form (Server Action)
-- [ ] Admin: Create/Edit posts (protected)
-- [ ] Comments system
-- [ ] Search posts
-- [ ] Dark mode
+**Challenge 1: Routing từ đầu (20 phút)**
+```typescript
+// Tạo cấu trúc routes mới không xem code cũ:
+// - Route groups
+// - Dynamic routes
+// - Layouts
+```
+
+**Challenge 2: Server/Client Mix (20 phút)**
+```typescript
+// Build component với đúng pattern:
+// - Server Component fetch data
+// - Client Component cho interactivity
+```
+
+**Challenge 3: Server Action (20 phút)**
+```typescript
+// Tạo form với:
+// - Server Action
+// - Validation
+// - Loading state
+// - Error handling
+```
+
+---
+
+### **E-commerce Next.js - Final Checklist**
+
+**Pages hoàn thành:**
+- [ ] Landing page (marketing)
+- [ ] Products listing với filters
+- [ ] Product detail với gallery
+- [ ] Cart page
+- [ ] Checkout flow
+- [ ] Order confirmation
 
 **Technical Requirements:**
-- [ ] Next.js 14+ App Router
-- [ ] TypeScript
-- [ ] Server Components cho data fetching
-- [ ] Client Components cho interactivity
+- [ ] Đúng Server/Client component usage
+- [ ] Caching strategy hợp lý
 - [ ] Server Actions cho mutations
-- [ ] Proper caching strategy
 - [ ] SEO optimized (metadata, sitemap)
-- [ ] Deploy to Vercel
+- [ ] Loading & error UI
+- [ ] Deployed on Vercel
 
-**Checklist:**
-- [ ] Score ≥80% tất cả Knowledge Checks
-- [ ] Blog hoạt động đầy đủ
-- [ ] Deployed live
+**Pass Criteria:**
+- ✅ Full shopping flow hoạt động
+- ✅ Score ≥80% Knowledge Checks
+- ✅ Live deployment
 
 ---
 

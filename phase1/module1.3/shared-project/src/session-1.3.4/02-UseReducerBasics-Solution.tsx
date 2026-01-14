@@ -12,7 +12,7 @@ import { useReducer } from "react";
 
 interface CounterState {
   count: number;
-  step: number;      // Buoc nhay khi increment/decrement
+  step: number; // Buoc nhay khi increment/decrement
   history: number[]; // Luu lai cac gia tri truoc
 }
 
@@ -23,10 +23,10 @@ interface CounterState {
 // Discriminated Union cho type-safety
 // TypeScript se biet chinh xac payload type trong moi case
 type CounterAction =
-  | { type: "INCREMENT" }             // Khong can payload
-  | { type: "DECREMENT" }             // Khong can payload
-  | { type: "RESET" }                 // Khong can payload
-  | { type: "SET"; payload: number }  // Payload la number
+  | { type: "INCREMENT" } // Khong can payload
+  | { type: "DECREMENT" } // Khong can payload
+  | { type: "RESET" } // Khong can payload
+  | { type: "SET"; payload: number } // Payload la number
   | { type: "SET_STEP"; payload: number };
 
 // ============================================================
@@ -45,16 +45,19 @@ const initialState: CounterState = {
 
 // Reducer la PURE FUNCTION: (state, action) => newState
 // Khong side effects, khong mutate state, luon return new object
-function counterReducer(state: CounterState, action: CounterAction): CounterState {
+function counterReducer(
+  state: CounterState,
+  action: CounterAction
+): CounterState {
   // switch on action.type de handle tung case
   switch (action.type) {
     case "INCREMENT":
       // Return new object voi count duoc tang
       // Luu count cu vao history truoc khi thay doi
       return {
-        ...state,  // Copy tat ca properties
+        ...state, // Copy tat ca properties
         count: state.count + state.step,
-        history: [...state.history, state.count],  // Append to history
+        history: [...state.history, state.count], // Append to history
       };
 
     case "DECREMENT":
@@ -118,7 +121,7 @@ export default function UseReducerBasicsSolution() {
         <h4 style={{ margin: "0 0 0.5rem 0" }}>Key Concepts:</h4>
         <ul style={{ margin: 0, paddingLeft: "1.5rem" }}>
           <li>
-            <strong>Reducer</strong> - Pure function: (state, action) => newState
+            <strong>Reducer</strong> - Pure function: (state, action) newState
           </li>
           <li>
             <strong>Actions</strong> - Objects voi type va optional payload
@@ -322,7 +325,7 @@ export default function UseReducerBasicsSolution() {
             margin: 0,
           }}
         >
-{`// 1. DEFINE State type
+          {`// 1. DEFINE State type
 interface State { count: number; /* ... */ }
 
 // 2. DEFINE Action types (Discriminated Union)

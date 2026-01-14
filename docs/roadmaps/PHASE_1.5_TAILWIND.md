@@ -53,51 +53,38 @@
 
 #### Bài tập:
 
-**Exercise 1: Spacing Playground (30 phút)**
+**🔹 Micro 1: Spacing Classes (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Card component với:
-//    - Padding: 6 (1.5rem) all sides
-//    - Margin bottom: 4 (1rem)
-//    - Border radius: lg
-//    - Shadow: md
-// 2. Bên trong có 3 sections với spacing vertical 4
-
-// TODO: Implement Card với spacing đúng
-function SpacingCard() {
-  return (
-    // Sử dụng tailwind classes
-  )
-}
+// Viết 1 div với: padding 4, margin-top 2, margin-bottom 6
+// Bên trong có 2 paragraphs với khoảng cách vertical 3
 ```
 
----
-
-**Exercise 2: Typography Scale (30 phút)**
+**🔹 Micro 2: Typography Classes (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Tạo component hiển thị:
-// 1. Heading: text-2xl, font-bold, text-gray-900
-// 2. Subtitle: text-lg, font-medium, text-gray-600
-// 3. Body: text-base, text-gray-700, leading-relaxed
-// 4. Caption: text-sm, text-gray-500
-
-// TODO: Implement TypographyDemo
+// Viết 1 heading với: text 2xl, bold, màu gray-800
+// Viết 1 paragraph với: text base, màu gray-600, line-height relaxed
 ```
 
----
-
-**Exercise 3: Color Palette Card (45 phút)**
+**🔸 Mini: Product Price Display (15 phút)**
 ```typescript
-// YÊU CẦU:
-// Product card với:
-// - Image placeholder (bg-gray-200)
-// - Title (text-gray-900)
-// - Price (text-green-600, font-bold)
-// - "Sale" badge (bg-red-500, text-white)
-// - Button (bg-blue-600, hover:bg-blue-700, text-white)
+// Tạo component hiển thị giá sản phẩm:
+// - Tên sản phẩm (heading style)
+// - Giá gốc (gạch ngang, màu nhạt)
+// - Giá sale (màu đỏ/xanh, bold, size lớn hơn)
+// - Badge "Sale 20%" (background màu, text trắng, padding nhỏ)
+```
 
-// TODO: Implement ProductCard
+**🔶 Real: Product Card E-commerce (45 phút)**
+```typescript
+// Xây dựng ProductCard component cho trang E-commerce:
+// - Hiển thị ảnh sản phẩm (có thể dùng placeholder)
+// - Tên, giá gốc, giá sale
+// - Rating stars
+// - Badge trạng thái (New, Sale, Out of Stock)
+// - Nút "Add to Cart"
+//
+// Yêu cầu: Áp dụng spacing, typography, colors hợp lý
+// Component này sẽ được dùng tiếp ở các session sau
 ```
 
 ---
@@ -180,54 +167,43 @@ function SpacingCard() {
 
 #### Bài tập:
 
-**Exercise 1: Navigation Bar (45 phút)**
+**🔹 Micro 1: Flex Centering (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Navbar với:
+// Viết 1 div căn giữa cả ngang và dọc bằng flexbox
+// Chiều cao full viewport
+```
+
+**🔹 Micro 2: Grid Columns (5 phút)**
+```typescript
+// Tạo grid 3 cột đều nhau với gap 4
+// Mỗi cột chứa 1 div có background màu khác nhau
+```
+
+**🔸 Mini: Product Grid Layout (15 phút)**
+```typescript
+// Sử dụng ProductCard đã tạo ở Session 1.5.1
+// Hiển thị 4-6 products trong grid:
+// - Mobile: 1 cột
+// - Tablet: 2 cột
+// - Desktop: 3 cột
+// - Gap hợp lý
+```
+
+**🔶 Real: E-commerce Header + Product Section (45 phút)**
+```typescript
+// Xây dựng layout cho trang chủ E-commerce:
+//
+// HEADER:
 // - Logo bên trái
-// - Nav links ở giữa (gap-6)
-// - Auth buttons bên phải (gap-2)
-// - Dùng flex + justify-between
-
-interface NavbarProps {
-  logo: string
-  links: { href: string; label: string }[]
-}
-
-// TODO: Implement Navbar với flexbox
-```
-
----
-
-**Exercise 2: Product Grid (60 phút)**
-```typescript
-// YÊU CẦU:
-// Products grid:
-// - Mobile: 1 column
-// - Tablet (md): 2 columns
-// - Desktop (lg): 4 columns
-// - Gap: 6
-// - Mỗi product card có image, title, price
-
-// TODO: Implement responsive ProductGrid
-```
-
----
-
-**Exercise 3: Dashboard Layout (75 phút)**
-```typescript
-// YÊU CẦU:
-// Dashboard layout:
-// - Sidebar: fixed width 250px, full height
-// - Main content: flex-1
-// - Header: fixed top
-// - Content area scrollable
-
-// Structure:
-// [Sidebar 250px] | [Header]
-//                 | [Content - scrollable]
-
-// TODO: Implement với grid hoặc flex
+// - Search bar ở giữa
+// - Cart icon + User icon bên phải
+//
+// PRODUCT SECTION:
+// - Tiêu đề "Featured Products"
+// - Grid ProductCard responsive (dùng component đã tạo)
+// - Filter sidebar bên trái (desktop only)
+//
+// Component này sẽ được mở rộng ở các session sau
 ```
 
 ---
@@ -293,45 +269,41 @@ interface NavbarProps {
 
 #### Bài tập:
 
-**Exercise 1: Responsive Card Grid (45 phút)**
+**🔹 Micro 1: Responsive Text (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Card grid:
-// - Mobile: 1 card, stacked layout
-// - Tablet: 2 cards per row
-// - Desktop: 3 cards per row
-// - Large: 4 cards per row
-// - Card padding tăng theo breakpoint
-
-// TODO: Implement ResponsiveCardGrid
+// Viết heading: mobile text-xl, tablet text-2xl, desktop text-4xl
 ```
 
----
-
-**Exercise 2: Mobile-First Navigation (60 phút)**
+**🔹 Micro 2: Show/Hide (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Navigation:
-// - Mobile: hamburger menu, hidden links
-// - Desktop: full nav với all links visible
-// - Logo luôn hiển thị
-// - Menu toggle button chỉ hiện trên mobile
-
-// TODO: Implement với responsive classes
+// Tạo 2 buttons: 1 chỉ hiện trên mobile, 1 chỉ hiện trên desktop
 ```
 
----
-
-**Exercise 3: Hero Section (45 phút)**
+**🔸 Mini: Responsive ProductCard (15 phút)**
 ```typescript
-// YÊU CẦU:
-// Hero section:
-// - Mobile: full width, centered text, stacked layout
-// - Desktop: 2 columns (text + image), larger fonts
-// - Padding responsive
-// - Height: min-h-[500px] md:min-h-[600px]
+// Cải tiến ProductCard từ session trước:
+// - Mobile: layout dọc, ảnh trên, thông tin dưới
+// - Desktop: layout ngang, ảnh trái, thông tin phải
+// - Padding tăng theo breakpoint
+```
 
-// TODO: Implement ResponsiveHero
+**🔶 Real: Responsive E-commerce Homepage (45 phút)**
+```typescript
+// Cải tiến layout E-commerce từ session 1.5.2:
+//
+// MOBILE:
+// - Header: logo + hamburger menu icon
+// - Không có sidebar
+// - Products grid 1 cột
+//
+// TABLET:
+// - Header đầy đủ
+// - Products grid 2 cột
+//
+// DESKTOP:
+// - Sidebar filter bên trái
+// - Products grid 3 cột
+// - Spacing lớn hơn
 ```
 
 ---
@@ -395,61 +367,40 @@ interface NavbarProps {
 
 #### Bài tập:
 
-**Exercise 1: Interactive Button Set (30 phút)**
+**🔹 Micro 1: Hover Button (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Button variants với states:
-// - Primary: bg-blue-600, hover:bg-blue-700, active:scale-95
-// - Secondary: border, hover:bg-gray-100
-// - Danger: bg-red-600, hover:bg-red-700
-// - Focus ring cho tất cả
-// - Disabled state: opacity-50, cursor-not-allowed
-
-// TODO: Implement Button với variants
+// Tạo button với: hover đổi màu background, active scale nhỏ lại
 ```
 
----
-
-**Exercise 2: Card với Hover Effects (45 phút)**
+**🔹 Micro 2: Focus Input (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Card với hover effects:
-// - Default: shadow-md
-// - Hover: shadow-xl, translate-y-[-4px]
+// Tạo input với: focus có ring xanh, border trong suốt
+```
+
+**🔸 Mini: Interactive ProductCard (15 phút)**
+```typescript
+// Thêm interactivity cho ProductCard:
+// - Hover: shadow lớn hơn, translate Y lên trên
+// - Hover vào ảnh: ảnh scale lên (dùng group)
+// - Button Add to Cart: hover/active states
 // - Transition smooth
-// - Image scale on hover (group pattern)
-// - "View Details" button hiện khi hover
-
-// TODO: Implement HoverCard
 ```
 
----
-
-**Exercise 3: Form với Focus States (60 phút)**
+**🔶 Real: E-commerce với Full Interactivity (45 phút)**
 ```typescript
-// YÊU CẦU:
-// Form inputs với:
-// - Default: border-gray-300
-// - Focus: ring-2 ring-blue-500 border-transparent
-// - Error: ring-red-500, error message hiện (peer pattern)
-// - Valid: ring-green-500
-// - Floating label (peer + translate)
-
-// TODO: Implement Form với focus states
-```
-
----
-
-**Exercise 4: Dark Mode Toggle (45 phút)**
-```typescript
-// YÊU CẦU:
-// Implement dark mode:
-// - Toggle button (sun/moon icon)
-// - Card component với dark variants
-// - Store preference in localStorage
-// - Apply class to html element
-
-// TODO: Implement useDarkMode hook + UI
+// Hoàn thiện trang E-commerce với states:
+//
+// HEADER:
+// - Search input với focus states
+// - Cart icon có badge số lượng
+// - Dropdown menu khi hover user icon (group pattern)
+//
+// PRODUCT CARDS:
+// - Tất cả hover effects từ Mini exercise
+// - "Quick View" button hiện khi hover card
+// - Heart icon (wishlist) toggle on click
+//
+// Tùy chọn: Thêm dark mode toggle
 ```
 
 ---
@@ -579,47 +530,34 @@ module.exports = {
 
 #### Bài tập:
 
-**Exercise 1: Brand Color System (45 phút)**
+**🔹 Micro 1: Custom Color (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Tạo custom color palette trong tailwind.config.js:
-//    - brand: primary brand color với shades 50-900
-//    - success, warning, error colors
-// 2. Tạo Button component sử dụng brand colors
-// 3. Test với dark mode variants
-
-// TODO: Configure colors + implement components
+// Thêm màu "brand" vào tailwind.config.js
+// Sử dụng: bg-brand-500, text-brand-600
 ```
 
----
-
-**Exercise 2: Typography System (45 phút)**
+**🔹 Micro 2: @apply (5 phút)**
 ```typescript
-// YÊU CẦU:
-// 1. Configure custom fonts (Inter, Plus Jakarta Sans)
-// 2. Tạo typography component classes với @apply:
-//    - .heading-1, .heading-2, .heading-3
-//    - .body-large, .body-default, .body-small
-//    - .caption
-// 3. Include responsive variants
-
-// TODO: Setup typography system
+// Tạo class .btn-primary với @apply trong globals.css
+// Bao gồm: padding, background, hover, focus ring
 ```
 
----
-
-**Exercise 3: Component Library Foundation (90 phút)**
+**🔸 Mini: E-commerce Design Tokens (20 phút)**
 ```typescript
-// YÊU CẦU:
-// Tạo base components với @apply:
-// 1. Button (.btn, .btn-primary, .btn-secondary, .btn-outline)
-// 2. Input (.input-field, .input-error)
-// 3. Card (.card, .card-header, .card-body, .card-footer)
-// 4. Badge (.badge, .badge-success, .badge-warning, .badge-error)
+// Tạo design system cho E-commerce project:
+// 1. Colors: brand (primary), accent, success, error
+// 2. Custom spacing nếu cần
+// 3. Button classes: .btn-primary, .btn-secondary, .btn-outline
+// 4. Input class: .input-field với focus states
+```
 
-// File: src/styles/components.css
-
-// TODO: Implement component classes
+**🔶 Real: Refactor E-commerce với Design System (45 phút)**
+```typescript
+// Áp dụng design system vào project E-commerce:
+// - Thay thế hardcoded colors bằng brand colors
+// - Sử dụng button/input classes đã tạo
+// - Đảm bảo consistency toàn bộ project
+// - Thêm dark mode variants nếu chưa có
 ```
 
 ---
@@ -781,50 +719,45 @@ function cn(...inputs: ClassValue[]) {
 
 #### Bài tập:
 
-**Exercise 1: Accessible Modal với Headless UI (60 phút)**
+**🔹 Micro 1: CVA Button (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Modal component với:
-// - @headlessui/react Dialog
-// - Tailwind animations (fade in/out, scale)
-// - Focus trap (built-in)
-// - ESC to close
-// - Backdrop click to close
-// - Proper ARIA labels
-
-// TODO: Implement AccessibleModal
+// Tạo buttonVariants với CVA
+// Variants: primary, secondary | Sizes: sm, md, lg
 ```
 
----
-
-**Exercise 2: Button System với CVA (60 phút)**
+**🔹 Micro 2: cn() Helper (5 phút)**
 ```typescript
-// YÊU CẦU:
-// Complete Button component:
-// - Variants: primary, secondary, outline, ghost, danger
-// - Sizes: sm, md, lg
-// - States: loading (với spinner), disabled
-// - Icon support (left/right icon)
-// - Full width option
-// - TypeScript types
-
-// TODO: Implement với CVA
+// Tạo helper function cn() với clsx + tailwind-merge
+// Test với conditional classes
 ```
 
----
-
-**Exercise 3: Dropdown Menu với Radix (60 phút)**
+**🔸 Mini: E-commerce Modal (20 phút)**
 ```typescript
-// YÊU CẦU:
-// Dropdown menu:
-// - @radix-ui/react-dropdown-menu
-// - Tailwind styling
-// - Icons cho menu items
-// - Keyboard navigation (built-in)
-// - Sub-menus
-// - Checkboxes/Radio trong menu
+// Sử dụng Headless UI hoặc Radix tạo:
+// - Modal "Quick View" cho product
+// - Hiển thị ảnh lớn, thông tin chi tiết
+// - Close button, backdrop click to close
+// - Smooth animations
+```
 
-// TODO: Implement StyledDropdownMenu
+**🔶 Real: E-commerce Hoàn Chỉnh (60 phút)**
+```typescript
+// Hoàn thiện E-commerce project với production-ready features:
+//
+// COMPONENTS NÊN CÓ:
+// - Header với dropdown menu (user menu)
+// - Product grid với Quick View modal
+// - Add to Cart với notification/toast
+// - Cart drawer/sidebar (slide in từ phải)
+// - Filter dropdowns (category, price range)
+//
+// TECHNICAL:
+// - Tất cả buttons sử dụng CVA
+// - Tất cả interactive components có animations
+// - Dark mode hoạt động
+// - Mobile responsive
+//
+// Đây là project hoàn chỉnh của Phase 1.5!
 ```
 
 ---
@@ -846,103 +779,58 @@ function cn(...inputs: ClassValue[]) {
 
 ---
 
-## 📅 Session 1.5.R: Review & Mini Project (3-4h)
+## 📅 Session 1.5.R: Review & Polish (2-3h)
 
-> **MỤC TIÊU:** Củng cố Tailwind CSS - Build landing page hoàn chỉnh
-
----
-
-### Part 1: Timed Challenges (1.5h)
-
-**Challenge 1: Responsive Hero (30 phút)**
-```typescript
-// YÊU CẦU:
-// Hero section:
-// - Mobile: centered, stacked
-// - Desktop: 2 columns
-// - Gradient background
-// - CTA buttons
-// - Không xem code cũ
-
-// TODO: Code từ đầu
-```
+> **MỤC TIÊU:** Review kiến thức + Hoàn thiện E-commerce project
 
 ---
 
-**Challenge 2: Feature Grid (30 phút)**
+### Part 1: Quick Challenges (1h)
+
+**Challenge 1: Rebuild ProductCard từ đầu (20 phút)**
 ```typescript
-// YÊU CẦU:
-// Features section:
-// - 3 columns on desktop, 1 on mobile
-// - Icon, title, description per feature
-// - Hover effect on cards
-// - Consistent spacing
-
-// TODO: Code từ đầu
-```
-
----
-
-**Challenge 3: Interactive Form (30 phút)**
-```typescript
-// YÊU CẦU:
-// Contact form:
-// - Floating labels
-// - Focus states
-// - Error states (peer)
-// - Submit button with loading state
+// Không xem code cũ, tự code lại ProductCard với:
+// - Responsive layout
+// - Hover effects
 // - Dark mode support
+```
 
-// TODO: Code từ đầu
+**Challenge 2: Build Component mới (20 phút)**
+```typescript
+// Tạo "Testimonial Card":
+// - Avatar, tên, chức danh
+// - Quote text
+// - Star rating
+// - Hover effect
+// - Chưa từng làm trước đó
+```
+
+**Challenge 3: Responsive Debug (20 phút)**
+```typescript
+// Nhận 1 component bị lỗi responsive
+// Tìm và sửa các issues
 ```
 
 ---
 
-### Part 2: Mini Project - Landing Page (2-2.5h)
+### Part 2: E-commerce Project Completion
 
-**YÊU CẦU:**
-Build complete landing page với TẤT CẢ Tailwind skills:
-
-**Sections:**
-- [ ] Hero section (gradient, responsive, CTAs)
-- [ ] Features grid (icons, hover effects)
-- [ ] Testimonials carousel/grid
-- [ ] Pricing cards (highlighted plan)
-- [ ] CTA section
-- [ ] Footer (links, social icons)
-
-**Technical Requirements:**
-✅ **Responsive:** Mobile-first design
-✅ **Dark mode:** Toggle với localStorage persistence
-✅ **Animations:** Hover effects, transitions
-✅ **States:** Focus, active, disabled
-✅ **Components:** Reusable classes (@apply hoặc CVA)
-✅ **Accessibility:** Focus rings, contrast ratios
-
-**Bonus:**
-- Smooth scroll navigation
-- Animated statistics counter
-- Newsletter signup form
-
----
-
-### Self-Assessment:
-
-**Checklist:**
-- [ ] Hero responsive và đẹp
-- [ ] Grid layouts hoạt động trên tất cả breakpoints
+**Checklist hoàn thành:**
+- [ ] Header responsive với search, cart, user menu
+- [ ] Product grid với filter sidebar
+- [ ] ProductCard với đầy đủ effects
+- [ ] Quick View modal
+- [ ] Cart drawer/notification
 - [ ] Dark mode toggle hoạt động
-- [ ] Hover/focus states đầy đủ
-- [ ] Transitions smooth
-- [ ] Không có horizontal scroll on mobile
-- [ ] Typography consistent
-- [ ] Spacing consistent
+- [ ] Design system (colors, buttons, inputs)
+- [ ] Mobile-first responsive
+- [ ] Không có horizontal scroll trên mobile
+- [ ] Tất cả interactive states hoạt động
 
 **Pass Criteria:**
-- ✅ Tất cả sections hoàn thành
-- ✅ Responsive trên mobile, tablet, desktop
-- ✅ Dark mode hoạt động
+- ✅ Tất cả checklist hoàn thành
 - ✅ Code được ≥80% không xem solution
+- ✅ Project có thể demo được
 
 ---
 

@@ -19,7 +19,7 @@
  * - Xem Hints section o cuoi component neu can tro giup
  */
 
-import { useState, ReactNode } from "react";
+import { useState, ReactNode, createContext, useContext } from "react";
 
 // ============================================================
 // STEP 1: TYPE DEFINITIONS (DONE)
@@ -39,7 +39,7 @@ interface ThemeContextType {
 
 // TODO: Tao context voi createContext
 // Hint: createContext<Type | undefined>(defaultValue)
-const ThemeContext = ???<??? | ???>(???);
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 //                   ^createContext   ^ThemeContextType   ^undefined   ^undefined
 
 // ============================================================
@@ -60,10 +60,10 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
   // TODO: Return Provider voi value chua theme va toggleTheme
   return (
-    <???.Provider value={{ ???, ??? }}>
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {/* ^ThemeContext        ^theme  ^toggleTheme */}
       {children}
-    </???.Provider>
+    </ThemeContext.Provider>
     //  ^ThemeContext
   );
 }
@@ -75,11 +75,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
 
 export function useTheme(): ThemeContextType {
   // TODO: Lay context bang useContext
-  const context = ???(???);
+  const context = useContext(ThemeContext);
   //              ^useContext  ^ThemeContext
 
   // TODO: Check neu undefined thi throw error
-  if (context === ???) {
+  if (context === undefined) {
     //              ^undefined
     throw new Error("useTheme must be used within a ThemeProvider");
   }
@@ -102,7 +102,7 @@ function ThemeToggleButton() {
         padding: "0.75rem 1.5rem",
         fontSize: "1rem",
         cursor: "pointer",
-        backgroundColor: theme === "light" ? "#fff" : "#333",
+        backgroundColor: theme === "light" ? "#c91515ff" : "#333",
         color: theme === "light" ? "#333" : "#fff",
         border: `2px solid ${theme === "light" ? "#333" : "#fff"}`,
         borderRadius: "8px",
@@ -131,10 +131,20 @@ function ThemedCard() {
     >
       <h3 style={{ margin: "0 0 0.5rem 0" }}>Themed Card</h3>
       <p style={{ margin: 0 }}>
-        This card automatically updates based on the current theme.
-        Theme value comes from Context, not props!
+        This card automatically updates based on the current theme. Theme value
+        comes from Context, not props!
       </p>
     </div>
+  );
+}
+
+function ThemeNhut() {
+  const { theme, toggleTheme } = useTheme();
+
+  return (
+    <button onClick={toggleTheme}>
+      <div style={{ color: `${theme}` }}>hihi</div>
+    </button>
   );
 }
 
@@ -160,11 +170,20 @@ function DeepNestedComponent() {
 // Layout components to show deep nesting
 function Sidebar() {
   return (
-    <div style={{ padding: "1rem", border: "1px dashed #999", borderRadius: "8px" }}>
-      <p style={{ margin: "0 0 0.5rem 0", fontSize: "0.875rem", color: "#666" }}>
+    <div
+      style={{
+        padding: "1rem",
+        border: "1px dashed #999",
+        borderRadius: "8px",
+      }}
+    >
+      <p
+        style={{ margin: "0 0 0.5rem 0", fontSize: "0.875rem", color: "#666" }}
+      >
         Sidebar (doesn't need theme)
       </p>
       <DeepNestedComponent />
+      <ThemeNhut />
     </div>
   );
 }
@@ -242,7 +261,7 @@ export default function UseContextBasicsExercise() {
               overflow: "auto",
             }}
           >
-{`// STEP 2: Create Context
+            {`// STEP 2: Create Context
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 // STEP 3: Provider value

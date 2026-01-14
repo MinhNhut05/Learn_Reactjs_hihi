@@ -28,7 +28,7 @@ import { useReducer } from "react";
 
 interface CounterState {
   count: number;
-  step: number;      // Buoc nhay khi increment/decrement
+  step: number; // Buoc nhay khi increment/decrement
   history: number[]; // Luu lai cac gia tri truoc
 }
 
@@ -40,11 +40,12 @@ interface CounterState {
 // TODO: Dinh nghia union type cho cac actions
 // Hint: Moi action co "type" field, payload neu can
 type CounterAction =
-  | { type: "???"; }                    // <- "INCREMENT"
-  | { type: "???"; }                    // <- "DECREMENT"
-  | { type: "???"; }                    // <- "RESET"
-  | { type: "???"; payload: number }    // <- "SET"
-  | { type: "SET_STEP"; payload: number };
+  | { type: "INCREMENT" } // <- "INCREMENT"
+  | { type: "DECREMENT" } // <- "DECREMENT"
+  | { type: "RESET" } // <- "RESET"
+  | { type: "SET"; payload: number } // <- "SET"
+  | { type: "SET_STEP"; payload: number }
+  | { type: "nhan"; payload: number };
 
 // ============================================================
 // STEP 3: INITIAL STATE
@@ -63,36 +64,39 @@ const initialState: CounterState = {
 
 // TODO: Hoan thanh reducer function
 // Hint: (state, action) => newState, KHONG mutate state!
-function counterReducer(state: CounterState, action: CounterAction): ??? {
+function counterReducer(
+  state: CounterState,
+  action: CounterAction
+): CounterState {
   //                                                                 ^CounterState
-  switch (action.???) {
+  switch (action.type) {
     //           ^type
 
     case "INCREMENT":
       // TODO: Tang count theo step, luu count cu vao history
       return {
         ...state,
-        count: state.count + state.???,  // <- step
+        count: state.count + state.step, // <- step
         history: [...state.history, state.count],
       };
 
     case "DECREMENT":
       // TODO: Giam count theo step
       return {
-        ???,                               // <- ...state
+        ...state, // <- ...state
         count: state.count - state.step,
         history: [...state.history, state.count],
       };
 
     case "RESET":
       // TODO: Reset ve initial state
-      return ???;  // <- initialState
+      return initialState; // <- initialState
 
     case "SET":
       // TODO: Set count = payload
       return {
         ...state,
-        count: action.???,  // <- payload
+        count: action.payload, // <- payload
         history: [...state.history, state.count],
       };
 
@@ -100,6 +104,13 @@ function counterReducer(state: CounterState, action: CounterAction): ??? {
       return {
         ...state,
         step: action.payload,
+      };
+
+    case "nhan":
+      return {
+        ...state,
+        count: state.count * action.payload,
+        history: [...state.history, state.count],
       };
 
     default:
@@ -115,8 +126,8 @@ function counterReducer(state: CounterState, action: CounterAction): ??? {
 export default function UseReducerBasicsExercise() {
   // TODO: Su dung useReducer hook
   // Hint: const [state, dispatch] = useReducer(reducer, initialState)
-  const [???, ???] = ???(???, ???);
-  //     ^state  ^dispatch   ^useReducer  ^counterReducer  ^initialState
+  const [state, dispatch] = useReducer(counterReducer, initialState);
+  //     ^state  ^dispatch   ^usReducer  ^counterReducer  ^initialState
 
   return (
     <div style={{ padding: "1rem" }}>
@@ -169,7 +180,7 @@ export default function UseReducerBasicsExercise() {
       >
         {/* TODO: Dispatch INCREMENT action */}
         <button
-          onClick={() => dispatch({ ???: "???" })}
+          onClick={() => dispatch({ type: "INCREMENT" })}
           //                        ^type  ^INCREMENT
           style={{
             padding: "0.75rem 1.5rem",
@@ -186,7 +197,7 @@ export default function UseReducerBasicsExercise() {
 
         {/* TODO: Dispatch DECREMENT action */}
         <button
-          onClick={() => ???({ type: "DECREMENT" })}
+          onClick={() => dispatch({ type: "DECREMENT" })}
           //              ^dispatch
           style={{
             padding: "0.75rem 1.5rem",
@@ -203,7 +214,7 @@ export default function UseReducerBasicsExercise() {
 
         {/* TODO: Dispatch RESET action */}
         <button
-          onClick={() => dispatch({ type: "???" })}
+          onClick={() => dispatch({ type: "RESET" })}
           //                               ^RESET
           style={{
             padding: "0.75rem 1.5rem",
@@ -217,6 +228,21 @@ export default function UseReducerBasicsExercise() {
         >
           Reset
         </button>
+
+        <button
+          onClick={() => dispatch({ type: "nhan", payload: 2 })}
+          style={{
+            padding: "0.75rem 1.5rem",
+            fontSize: "1rem",
+            backgroundColor: "#9e9e9e",
+            color: "#fff",
+            border: "none",
+            borderRadius: "8px",
+            cursor: "pointer",
+          }}
+        >
+          nhan
+        </button>
       </div>
 
       {/* Set Value */}
@@ -229,7 +255,7 @@ export default function UseReducerBasicsExercise() {
         }}
       >
         <button
-          onClick={() => dispatch({ type: "SET", payload: 100 })}
+          onClick={() => dispatch({ type: "SET", payload: 90 })}
           style={{
             padding: "0.5rem 1rem",
             backgroundColor: "#673ab7",
@@ -239,7 +265,7 @@ export default function UseReducerBasicsExercise() {
             cursor: "pointer",
           }}
         >
-          Set to 100
+          Set to 90
         </button>
         <button
           onClick={() => dispatch({ type: "SET", payload: -50 })}
@@ -337,7 +363,7 @@ export default function UseReducerBasicsExercise() {
               overflow: "auto",
             }}
           >
-{`// STEP 2: Action Types
+            {`// STEP 2: Action Types
 type CounterAction =
   | { type: "INCREMENT" }
   | { type: "DECREMENT" }

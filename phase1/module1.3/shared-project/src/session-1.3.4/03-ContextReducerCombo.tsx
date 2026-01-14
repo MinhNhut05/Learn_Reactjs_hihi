@@ -21,7 +21,13 @@
  * - Xem Hints section o cuoi component neu can tro giup
  */
 
-import { createContext, useContext, useReducer, ReactNode, Dispatch } from "react";
+import {
+  createContext,
+  useContext,
+  useReducer,
+  ReactNode,
+  Dispatch,
+} from "react";
 
 // ============================================================
 // STEP 1: TYPE DEFINITIONS
@@ -37,8 +43,8 @@ type FilterType = "all" | "active" | "completed";
 
 // TODO: Dinh nghia TodoState interface
 interface TodoState {
-  todos: ???[];       // <- Todo
-  filter: ???;        // <- FilterType
+  todos: Todo[]; // <- Todo
+  filter: FilterType; // <- FilterType
 }
 
 // ============================================================
@@ -48,10 +54,10 @@ interface TodoState {
 
 // TODO: Dinh nghia union type cho 5 actions
 type TodoAction =
-  | { type: "???"; payload: { id: string; text: string } }   // <- ADD_TODO
-  | { type: "TOGGLE_TODO"; payload: { ???: string } }        // <- id
-  | { type: "???"; payload: { id: string } }                 // <- DELETE_TODO
-  | { type: "SET_FILTER"; payload: ??? }                     // <- FilterType
+  | { type: "ADD_TODO"; payload: { id: string; text: string } } // <- ADD_TODO
+  | { type: "TOGGLE_TODO"; payload: { id: string } } // <- id
+  | { type: "DELETE_TODO"; payload: { id: string } } // <- DELETE_TODO
+  | { type: "SET_FILTER"; payload: FilterType } // <- FilterType
   | { type: "CLEAR_COMPLETED" };
 
 // ============================================================
@@ -78,7 +84,7 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
           ...state.todos,
           {
             id: action.payload.id,
-            text: action.payload.???,  // <- text
+            text: action.payload.text, // <- text
             completed: false,
           },
         ],
@@ -87,29 +93,32 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
     case "TOGGLE_TODO":
       return {
         ...state,
-        todos: state.todos.???(todo =>                    // <- map
-          todo.id === action.payload.id
-            ? { ...todo, completed: !todo.??? }            // <- completed
-            : todo
+        todos: state.todos.map(
+          (
+            todo // <- map
+          ) =>
+            todo.id === action.payload.id
+              ? { ...todo, completed: !todo.completed } // <- completed
+              : todo
         ),
       };
 
     case "DELETE_TODO":
       return {
         ...state,
-        todos: state.todos.???(todo => todo.id !== action.payload.id),  // <- filter
+        todos: state.todos.filter((todo) => todo.id !== action.payload.id), // <- filter
       };
 
     case "SET_FILTER":
       return {
-        ???,                    // <- ...state
+        ...state, // <- ...state
         filter: action.payload,
       };
 
     case "CLEAR_COMPLETED":
       return {
         ...state,
-        todos: state.todos.filter(todo => !todo.completed),
+        todos: state.todos.filter((todo) => !todo.completed),
       };
 
     default:
@@ -123,11 +132,13 @@ function todoReducer(state: TodoState, action: TodoAction): TodoState {
 // ============================================================
 
 // TODO: Tao context cho State
-const TodoStateContext = ???<TodoState | undefined>(???);
+const TodoStateContext = createContext<TodoState | undefined>(undefined);
 //                       ^createContext               ^undefined
 
 // TODO: Tao context cho Dispatch
-const TodoDispatchContext = createContext<??? | undefined>(undefined);
+const TodoDispatchContext = createContext<Dispatch<TodoAction> | undefined>(
+  undefined
+);
 //                                        ^Dispatch<TodoAction>
 
 // ============================================================
@@ -141,18 +152,18 @@ interface TodoProviderProps {
 
 export function TodoProvider({ children }: TodoProviderProps) {
   // TODO: Su dung useReducer
-  const [state, dispatch] = ???(???, ???);
+  const [state, dispatch] = useReducer(todoReducer, initialState);
   //                        ^useReducer  ^todoReducer  ^initialState
 
   // Tach thanh 2 Providers de optimize re-renders
   return (
-    <???.Provider value={state}>
+    <TodoStateContext.Provider value={state}>
       {/* ^TodoStateContext */}
-      <TodoDispatchContext.Provider value={???}>
+      <TodoDispatchContext.Provider value={dispatch}>
         {/*                                ^dispatch */}
         {children}
       </TodoDispatchContext.Provider>
-    </???.Provider>
+    </TodoStateContext.Provider>
     //  ^TodoStateContext
   );
 }
@@ -164,7 +175,7 @@ export function TodoProvider({ children }: TodoProviderProps) {
 
 // Hook de lay state
 export function useTodoState(): TodoState {
-  const context = ???(TodoStateContext);  // <- useContext
+  const context = useContext(TodoStateContext); // <- useContext
   if (context === undefined) {
     throw new Error("useTodoState must be used within TodoProvider");
   }
@@ -173,7 +184,7 @@ export function useTodoState(): TodoState {
 
 // Hook de lay dispatch
 export function useTodoDispatch(): Dispatch<TodoAction> {
-  const context = useContext(???);  // <- TodoDispatchContext
+  const context = useContext(TodoDispatchContext); // <- TodoDispatchContext
   if (context === undefined) {
     throw new Error("useTodoDispatch must be used within TodoProvider");
   }
@@ -453,7 +464,7 @@ export default function ContextReducerComboExercise() {
               fontSize: "0.85rem",
             }}
           >
-{`// STEP 1: State interface
+            {`// STEP 1: State interface
 interface TodoState {
   todos: Todo[];
   filter: FilterType;
