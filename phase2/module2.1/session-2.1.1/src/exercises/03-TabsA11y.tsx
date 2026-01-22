@@ -52,55 +52,55 @@ import {
   useCallback,
   type ReactNode,
   type KeyboardEvent,
-} from 'react'
+} from "react";
 
 // =============================================================================
 // TYPES
 // =============================================================================
 
 interface TabsContextType {
-  activeValue: string
-  setActiveValue: (value: string) => void
-  registerTab: (value: string) => void
-  getTabValues: () => string[]
+  activeValue: string;
+  setActiveValue: (value: string) => void;
+  registerTab: (value: string) => void;
+  getTabValues: () => string[];
 }
 
 interface TabsProps {
-  children: ReactNode
-  defaultValue: string
+  children: ReactNode;
+  defaultValue: string;
 }
 
 interface TabListProps {
-  children: ReactNode
-  'aria-label'?: string
+  children: ReactNode;
+  "aria-label"?: string;
 }
 
 interface TabProps {
-  children: ReactNode
-  value: string
+  children: ReactNode;
+  value: string;
 }
 
 interface TabPanelsProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface TabPanelProps {
-  children: ReactNode
-  value: string
+  children: ReactNode;
+  value: string;
 }
 
 // =============================================================================
 // CONTEXT & HOOK
 // =============================================================================
 
-const TabsContext = createContext<TabsContextType | null>(null)
+const TabsContext = createContext<TabsContextType | null>(null);
 
 function useTabsContext(): TabsContextType {
-  const context = useContext(TabsContext)
+  const context = useContext(TabsContext);
   if (!context) {
-    throw new Error('Tabs components must be used within <Tabs>')
+    throw new Error("Tabs components must be used within <Tabs>");
   }
-  return context
+  return context;
 }
 
 // =============================================================================
@@ -108,16 +108,16 @@ function useTabsContext(): TabsContextType {
 // =============================================================================
 
 function TabsRoot({ children, defaultValue }: TabsProps) {
-  const [activeValue, setActiveValue] = useState(defaultValue)
-  const tabValuesRef = useRef<string[]>([])
+  const [activeValue, setActiveValue] = useState(defaultValue);
+  const tabValuesRef = useRef<string[]>([]);
 
   const registerTab = useCallback((value: string) => {
     if (!tabValuesRef.current.includes(value)) {
-      tabValuesRef.current.push(value)
+      tabValuesRef.current.push(value);
     }
-  }, [])
+  }, []);
 
-  const getTabValues = useCallback(() => tabValuesRef.current, [])
+  const getTabValues = useCallback(() => tabValuesRef.current, []);
 
   return (
     <TabsContext.Provider
@@ -125,7 +125,7 @@ function TabsRoot({ children, defaultValue }: TabsProps) {
     >
       <div className="w-full">{children}</div>
     </TabsContext.Provider>
-  )
+  );
 }
 
 // =============================================================================
@@ -139,10 +139,10 @@ function TabsRoot({ children, defaultValue }: TabsProps) {
 // - onKeyDown handler cho keyboard navigation
 function TabList({
   children,
-  'aria-label': ariaLabel = 'Tab navigation',
+  "aria-label": ariaLabel = "Tab navigation",
 }: TabListProps) {
-  const { activeValue, setActiveValue, getTabValues } = useTabsContext()
-  const listRef = useRef<HTMLDivElement>(null)
+  const { activeValue, setActiveValue, getTabValues } = useTabsContext();
+  const listRef = useRef<HTMLDivElement>(null);
 
   // TODO 1.1: Implement handleKeyDown
   // Gợi ý:
@@ -152,54 +152,59 @@ function TabList({
   // - End: index = length - 1
   // - Sau khi đổi tab, focus vào tab mới
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    const tabValues = getTabValues()
-    const currentIndex = tabValues.indexOf(activeValue)
+    const tabValues = getTabValues();
+    const currentIndex = tabValues.indexOf(activeValue);
 
-    let newIndex: number | null = null
+    let newIndex: number | null = null;
 
     switch (e.key) {
-      case 'ArrowRight':
-      case 'ArrowDown':
-        // 👇 VIẾT CODE Ở ĐÂY
-        break
+      case "ArrowRight":
+      case "ArrowDown":
+        e.preventDefault();
+        newIndex = (currentIndex + 1) % tabValues.length;
+        break;
 
-      case 'ArrowLeft':
-      case 'ArrowUp':
-        // 👇 VIẾT CODE Ở ĐÂY
-        break
+      case "ArrowLeft":
+      case "ArrowUp":
+        e.preventDefault();
+        newIndex = (currentIndex - 1 + tabValues.length) % tabValues.length;
+        break;
 
-      case 'Home':
-        // 👇 VIẾT CODE Ở ĐÂY
-        break
+      case "Home":
+        e.preventDefault();
+        newIndex = 0;
+        break;
 
-      case 'End':
-        // 👇 VIẾT CODE Ở ĐÂY
-        break
+      case "End":
+        e.preventDefault();
+        newIndex = tabValues.length - 1;
+        break;
     }
 
     if (newIndex !== null) {
-      e.preventDefault()
-      setActiveValue(tabValues[newIndex])
+      e.preventDefault();
+      setActiveValue(tabValues[newIndex]);
 
       // Focus vào tab mới
-      const tabs = listRef.current?.querySelectorAll('[role="tab"]')
-      const targetTab = tabs?.[newIndex] as HTMLElement
-      targetTab?.focus()
+      const tabs = listRef.current?.querySelectorAll('[role="tab"]');
+      const targetTab = tabs?.[newIndex] as HTMLElement;
+      targetTab?.focus();
     }
-  }
+  };
 
   return (
     <div
       ref={listRef}
       // TODO 1.2: Thêm role và aria-label
       // 👇 THÊM ATTRIBUTES Ở ĐÂY
-
+      role="tablist"
+      aria-label={ariaLabel}
       onKeyDown={handleKeyDown}
       className="flex border-b border-gray-200"
     >
       {children}
     </div>
-  )
+  );
 }
 
 // =============================================================================
@@ -208,35 +213,35 @@ function TabList({
 
 // TODO 2: Thêm ARIA attributes cho Tab
 function Tab({ children, value }: TabProps) {
-  const { activeValue, setActiveValue, registerTab } = useTabsContext()
-  const isActive = activeValue === value
+  const { activeValue, setActiveValue, registerTab } = useTabsContext();
+  const isActive = activeValue === value;
 
   // Register tab value
-  registerTab(value)
+  registerTab(value);
 
   return (
     <button
       // TODO 2.1: Thêm các ARIA attributes
       // 👇 THÊM ATTRIBUTES Ở ĐÂY
-      // role="tab"
-      // aria-selected={isActive}
-      // aria-controls={`panel-${value}`}
-      // id={`tab-${value}`}
-      // tabIndex={isActive ? 0 : -1}
-
+      role="tab"
+      aria-selected={isActive}
+      aria-controls={`panel-${value}`}
+      id={`tab-${value}`}
+      tabIndex={isActive ? 0 : -1}
       onClick={() => setActiveValue(value)}
       className={`
         px-4 py-2 text-sm font-medium transition-colors -mb-px
         focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500
-        ${isActive
-          ? 'text-blue-600 border-b-2 border-blue-600'
-          : 'text-gray-500 hover:text-gray-700 border-b-2 border-transparent'
+        ${
+          isActive
+            ? "text-blue-600 border-b-2 border-blue-600"
+            : "text-gray-500 hover:text-gray-700 border-b-2 border-transparent"
         }
       `}
     >
       {children}
     </button>
-  )
+  );
 }
 
 // =============================================================================
@@ -244,7 +249,7 @@ function Tab({ children, value }: TabProps) {
 // =============================================================================
 
 function TabPanels({ children }: TabPanelsProps) {
-  return <div className="mt-4">{children}</div>
+  return <div className="mt-4">{children}</div>;
 }
 
 // =============================================================================
@@ -253,24 +258,23 @@ function TabPanels({ children }: TabPanelsProps) {
 
 // TODO 3: Thêm ARIA attributes cho TabPanel
 function TabPanel({ children, value }: TabPanelProps) {
-  const { activeValue } = useTabsContext()
+  const { activeValue } = useTabsContext();
 
-  if (activeValue !== value) return null
+  if (activeValue !== value) return null;
 
   return (
     <div
       // TODO 3.1: Thêm các ARIA attributes
       // 👇 THÊM ATTRIBUTES Ở ĐÂY
-      // role="tabpanel"
-      // id={`panel-${value}`}
-      // aria-labelledby={`tab-${value}`}
-      // tabIndex={0}
-
+      role="tabpanel"
+      id={`panel-${value}`}
+      aria-labelledby={`tab-${value}`}
+      tabIndex={0}
       className="p-4 bg-gray-50 rounded focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500"
     >
       {children}
     </div>
-  )
+  );
 }
 
 // =============================================================================
@@ -282,7 +286,7 @@ export const Tabs = Object.assign(TabsRoot, {
   Tab: Tab,
   Panels: TabPanels,
   Panel: TabPanel,
-})
+});
 
 // =============================================================================
 // TEST COMPONENT
@@ -326,11 +330,11 @@ export function Exercise03Demo() {
 
         <div className="p-3 bg-green-50 rounded border border-green-200">
           <p className="text-sm text-green-800">
-            <strong>Test ARIA:</strong> Mở DevTools → Elements → Inspect tab button
-            → Check có role="tab", aria-selected, etc.
+            <strong>Test ARIA:</strong> Mở DevTools → Elements → Inspect tab
+            button → Check có role="tab", aria-selected, etc.
           </p>
         </div>
       </div>
     </div>
-  )
+  );
 }

@@ -42,7 +42,7 @@
  * ============================================================================
  */
 
-import { createContext, useContext, useState, type ReactNode } from 'react'
+import { createContext, useContext, useState, type ReactNode } from "react";
 
 // =============================================================================
 // STEP 1: Định nghĩa Types
@@ -51,31 +51,31 @@ import { createContext, useContext, useState, type ReactNode } from 'react'
 // TODO 1.1: Định nghĩa TabsContextType
 // Gợi ý: Cần có activeValue (string) và setActiveValue (function)
 interface TabsContextType {
-  // 👇 VIẾT CODE Ở ĐÂY
-
+  activeValue: string;
+  setActiveValue: (value: string) => void;
 }
 
 interface TabsProps {
-  children: ReactNode
-  defaultValue: string
+  children: ReactNode;
+  defaultValue: string;
 }
 
 interface TabListProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface TabProps {
-  children: ReactNode
-  value: string
+  children: ReactNode;
+  value: string;
 }
 
 interface TabPanelsProps {
-  children: ReactNode
+  children: ReactNode;
 }
 
 interface TabPanelProps {
-  children: ReactNode
-  value: string
+  children: ReactNode;
+  value: string;
 }
 
 // =============================================================================
@@ -85,7 +85,7 @@ interface TabPanelProps {
 // TODO 2.1: Tạo TabsContext với createContext
 // Gợi ý: Default value là null, type là TabsContextType | null
 // 👇 VIẾT CODE Ở ĐÂY
-const TabsContext = null // ← Thay thế dòng này
+const TabsContext = createContext<TabsContextType | null>(null);
 
 // =============================================================================
 // STEP 3: Tạo Custom Hook
@@ -97,10 +97,11 @@ const TabsContext = null // ← Thay thế dòng này
 // - Nếu context là null, throw Error với message rõ ràng
 // - Return context
 function useTabsContext(): TabsContextType {
-  // 👇 VIẾT CODE Ở ĐÂY
-
-  // Placeholder - xóa dòng này khi implement
-  throw new Error('TODO: Implement useTabsContext')
+  const context = useContext(TabsContext);
+  if (!context) {
+    throw new Error("useTabsContext must be used within a Tabs component");
+  }
+  return context;
 }
 
 // =============================================================================
@@ -113,10 +114,13 @@ function useTabsContext(): TabsContextType {
 // - Wrap children trong TabsContext.Provider
 // - Truyền value={{ activeValue, setActiveValue }}
 function TabsRoot({ children, defaultValue }: TabsProps) {
-  // 👇 VIẾT CODE Ở ĐÂY
+  const [activeValue, setActiveValue] = useState(defaultValue);
 
-  // Placeholder - thay thế return này
-  return <div>{children}</div>
+  return (
+    <TabsContext.Provider value={{ activeValue, setActiveValue }}>
+      {children}
+    </TabsContext.Provider>
+  );
 }
 
 // =============================================================================
@@ -128,7 +132,7 @@ function TabsRoot({ children, defaultValue }: TabsProps) {
 function TabList({ children }: TabListProps) {
   // 👇 VIẾT CODE Ở ĐÂY
 
-  return <div>{children}</div>
+  return <div className="flex">{children}</div>;
 }
 
 // TODO 5.2: Implement Tab
@@ -137,17 +141,24 @@ function TabList({ children }: TabListProps) {
 // - Check isActive = activeValue === value
 // - onClick gọi setActiveValue(value)
 function Tab({ children, value }: TabProps) {
-  // 👇 VIẾT CODE Ở ĐÂY
-
-  return <button>{children}</button>
+  const { activeValue, setActiveValue } = useTabsContext();
+  const active = activeValue === value;
+  return (
+    <button
+      onClick={() => {
+        setActiveValue(value);
+      }}
+      className={`px-4 py-2 ${active ? "font-bold bg-blue-100" : ""}`}
+    >
+      {children}
+    </button>
+  );
 }
 
 // TODO 5.3: Implement TabPanels
 // Gợi ý: Đơn giản wrap children
 function TabPanels({ children }: TabPanelsProps) {
-  // 👇 VIẾT CODE Ở ĐÂY
-
-  return <div>{children}</div>
+  return <div className="mt-4">{children}</div>;
 }
 
 // TODO 5.4: Implement TabPanel
@@ -156,9 +167,11 @@ function TabPanels({ children }: TabPanelsProps) {
 // - Nếu activeValue !== value, return null (không render)
 // - Nếu match, render children
 function TabPanel({ children, value }: TabPanelProps) {
-  // 👇 VIẾT CODE Ở ĐÂY
-
-  return <div>{children}</div>
+  const { activeValue } = useTabsContext();
+  if (activeValue !== value) {
+    return null;
+  }
+  return <div className="mt-4">{children}</div>;
 }
 
 // =============================================================================
@@ -167,7 +180,12 @@ function TabPanel({ children, value }: TabPanelProps) {
 
 // TODO 6.1: Dùng Object.assign để attach sub-components
 // Gợi ý: Object.assign(TabsRoot, { List: TabList, Tab: Tab, ... })
-export const Tabs = TabsRoot // ← Thay thế dòng này
+export const Tabs = Object.assign(TabsRoot, {
+  List: TabList,
+  Tab: Tab,
+  Panels: TabPanels,
+  Panel: TabPanel,
+});
 
 // =============================================================================
 // TEST COMPONENT - Uncomment để test
@@ -179,7 +197,7 @@ export function Exercise01Demo() {
       <h2 className="text-xl font-bold mb-4">Exercise 1: Basic Tabs</h2>
 
       {/* Uncomment khi đã implement xong */}
-      {/*
+
       <Tabs defaultValue="tab1">
         <Tabs.List>
           <Tabs.Tab value="tab1">Tab 1</Tabs.Tab>
@@ -198,11 +216,10 @@ export function Exercise01Demo() {
           </Tabs.Panel>
         </Tabs.Panels>
       </Tabs>
-      */}
 
       <p className="text-gray-500 italic">
         Implement các TODO ở trên, sau đó uncomment phần test.
       </p>
     </div>
-  )
+  );
 }
